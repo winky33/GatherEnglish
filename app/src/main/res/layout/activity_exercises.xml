@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Exercises"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/exercise_top_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp">
+
+        <ImageView
+            android:id="@+id/exercise_exitBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="2dp"
+            app:srcCompat="@drawable/ic_baseline_arrow_back_ios_24" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/spelling_btn"
+            android:layout_width="match_parent"
+            android:layout_height="105dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="70dp"
+            android:background="@drawable/rounded_button_style"
+            android:text="@string/spelling_btn" />
+
+        <Button
+            android:id="@+id/listening_btn"
+            android:layout_width="match_parent"
+            android:layout_height="105dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="70dp"
+            android:text="@string/listening_btn"
+            android:background="@drawable/rounded_button_style"/>
+
+        <Button
+            android:id="@+id/reading_btn"
+            android:layout_width="match_parent"
+            android:layout_height="105dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:text="@string/reading_btn"
+            android:background="@drawable/rounded_button_style"/>
+
+    </LinearLayout>
+
+</LinearLayout>
