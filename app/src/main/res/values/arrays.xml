@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Reply Preference -->
     <string-array name="reply_entries">
         <item>Reply</item>
@@ -12,24 +12,28 @@
 
     <!-- Database Entries For Flashcard Table-->
     <string-array name="card_name">
-        <item>Sofa LV1</item>
-        <item>Sofa LV2</item>
-        <item>Lamp LV1</item>
-        <item>Lamp LV2</item>
-        <item>Table LV1</item>
-        <item>Table LV2</item>
-        <item>Chair LV1</item>
-        <item>Chair LV2</item>
+        <item>Sofa</item>
+        <item>Sofa</item>
+        <item>Lamp</item>
+        <item>Lamp</item>
+        <item>Table</item>
+        <item>Table</item>
+        <item>Chair</item>
+        <item>Chair</item>
+        <item>Bed</item>
+        <item>Bed</item>
     </string-array>
 
     <string-array name="card_type">
-        <item>LV1</item>
+        <item tools:ignore="Typos">LV1</item>
         <item>LV2</item>
-        <item>LV1</item>
+        <item tools:ignore="Typos">LV1</item>
         <item>LV2</item>
-        <item>LV1</item>
+        <item tools:ignore="Typos">LV1</item>
         <item>LV2</item>
-        <item>LV1</item>
+        <item tools:ignore="Typos">LV1</item>
+        <item>LV2</item>
+        <item tools:ignore="Typos">LV1</item>
         <item>LV2</item>
     </string-array>
 
@@ -42,6 +46,8 @@
         <item>table</item>
         <item>chair</item>
         <item>chair</item>
+        <item>bed</item>
+        <item>bed</item>
     </string-array>
 
 </resources>

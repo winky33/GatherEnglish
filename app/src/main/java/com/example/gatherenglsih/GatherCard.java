@@ -9,10 +9,12 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.media.MediaPlayer;
 import android.media.ThumbnailUtils;
 
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.Gravity;
 import android.view.View;
 
 import android.widget.ImageButton;
@@ -32,7 +34,6 @@ import java.util.Calendar;
 
 public class GatherCard extends AppCompatActivity {
     DBHelper db = new DBHelper(GatherCard.this);
-    private AlertDialog.Builder dialogBuilder;
     private AlertDialog dialog;
 
     //widgets
@@ -72,8 +73,14 @@ public class GatherCard extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK) {
-            Bitmap image = (Bitmap) data.getExtras().get("data");
-            int dimension = Math.min(image.getWidth(), image.getHeight());
+            Bitmap image = null;
+            if (data != null) {
+                image = (Bitmap) data.getExtras().get("data");
+            }
+            int dimension = 0;
+            if (image != null) {
+                dimension = Math.min(image.getWidth(), image.getHeight());
+            }
             image = ThumbnailUtils.extractThumbnail(image, dimension, dimension);
             imageView.setImageBitmap(image);
 
@@ -124,7 +131,7 @@ public class GatherCard extends AppCompatActivity {
                     maxPos = i;
                 }
             }
-            String[] classes = {"sofa", "lamp", "table", "chair"};
+            String[] classes = {"Sofa", "Lamp", "Table", "Chair"};
             object = classes[maxPos];
             result.setText(object);
 
@@ -144,12 +151,13 @@ public class GatherCard extends AppCompatActivity {
         if (diagram != 0){
             String currentTime = Calendar.getInstance().getTime().toString();
 
-            int cardID = db.getCardID(db.getCardTitle(imgClass));
+            int cardID = db.getCardID(imgClass);
             boolean storeCard = db.storeObtainCard(cardID,currentTime);
 
             if (storeCard){
-                dialogBuilder = new AlertDialog.Builder(this);
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
                 final View cardPopupView = getLayoutInflater().inflate(R.layout.gather_card_popup, null);
+                final MediaPlayer cardAudio = MediaPlayer.create(this, db.getCardAudio(cardID));
 
                 cardDiagramView = cardPopupView.findViewById(R.id.popup_obtained_card);
                 closeBtn = cardPopupView.findViewById(R.id.popup_close_btn);
@@ -160,7 +168,12 @@ public class GatherCard extends AppCompatActivity {
 
                 cardDiagramView.setImageResource(diagram);
 
+                dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                dialog.getWindow().setGravity(Gravity.CENTER_HORIZONTAL);
+
                 closeBtn.setOnClickListener(view -> dialog.dismiss());
+
+                cardAudio.start();
             }else{
                 Toast errorToast = Toast.makeText(GatherCard.this, "Flashcard Collected, Try On Other Object!", Toast.LENGTH_SHORT);
                 errorToast.show();

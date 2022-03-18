@@ -23,7 +23,8 @@
             android:layout_gravity="start"
             android:layout_marginStart="15dp"
             android:layout_marginTop="3dp"
-            app:srcCompat="@drawable/ic_baseline_arrow_back_ios_24_white" />
+            app:srcCompat="@drawable/ic_baseline_arrow_back_ios_24_white"
+            android:contentDescription="@string/back_button" />
 
         <TextView
             android:id="@+id/galleryText"
@@ -31,8 +32,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="0dp"
             android:layout_toEndOf="@+id/cardViewExitBtn"
-            android:text="Gallery"
-            android:textSize="20dp"
+            android:text="@string/gallery_desc"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/white"/>
 
@@ -43,7 +44,8 @@
             android:layout_alignParentEnd="true"
             android:layout_gravity="end"
             android:layout_marginEnd="30dp"
-            android:gravity="center">
+            android:gravity="center"
+            tools:ignore="RelativeOverlap,UseCompoundDrawables">
 
             <ImageView
                 android:id="@+id/coinImage"
@@ -66,9 +68,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
-                android:layout_toEndOf="@+id/coinImage"
                 android:text="@string/coin"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="@color/white"/>
         </LinearLayout>
@@ -87,12 +88,35 @@
         app:cardCornerRadius="20dp"
         app:cardElevation="20dp">
 
-        <ImageView
-            android:id="@+id/card_view_diagram"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleType="fitXY"
-            android:src="@drawable/chair2" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/card_view_diagram"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="40dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/chair1"
+                android:contentDescription="@string/card_diagram_description" />
+
+            <TextView
+                android:id="@+id/card_view_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-38dp"
+                android:textSize="23sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textAlignment="center"
+                android:text="@string/card_title_description" />
+
+        </LinearLayout>
+
+
+
 
     </androidx.cardview.widget.CardView>
 
@@ -129,7 +153,6 @@
             android:id="@+id/upgrade_btn"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginStart="10dp"
             android:layout_marginEnd="50dp"
             android:background="@drawable/circle_button_style"
             android:src="@drawable/ic_baseline_upgrade_24"

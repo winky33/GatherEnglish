@@ -13,14 +13,14 @@
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/gigi1"
+        android:contentDescription="@string/mascot"
+        android:src="@drawable/gigi"
         app:layout_constraintBottom_toTopOf="@+id/homeText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.443"
-        android:contentDescription="Mascot" />
+        app:layout_constraintVertical_bias="0.426" />
 
     <TextView
         android:id="@+id/homeText"
@@ -69,7 +69,7 @@
             android:id="@+id/gallery_btn"
             android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:layout_marginEnd="190dp"
+            android:layout_marginEnd="188dp"
             android:text="@string/card_gallery_btn"
             android:background="@drawable/rounded_button_style"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -81,7 +81,7 @@
             android:id="@+id/exercise_btn"
             android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:layout_marginStart="190dp"
+            android:layout_marginStart="188dp"
             android:text="@string/exercise_btn"
             android:background="@drawable/rounded_button_style"
             app:layout_constraintBottom_toBottomOf="parent"

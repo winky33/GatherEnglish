@@ -73,19 +73,20 @@ public class DBHelper extends SQLiteOpenHelper {
         Resources res = fContext.getResources();
 
 
-        int[] diagramArray = {R.drawable.sofa, R.drawable.sofa1, R.drawable.lamp, R.drawable.lamp2, R.drawable.table2,
-                R.drawable.table, R.drawable.chair2, R.drawable.chair};
+        int[] diagramArray = {R.drawable.sofa1, R.drawable.sofa, R.drawable.lamp, R.drawable.lamp1, R.drawable.table1,
+                R.drawable.table, R.drawable.chair, R.drawable.chair1, R.drawable.bed, R.drawable.bed1};
         String[] nameArray = res.getStringArray(R.array.card_name);
         String[] typeArray = res.getStringArray(R.array.card_type);
         String[] catArray = res.getStringArray(R.array.card_category);
-        String audio = " ";
+        int[] audioArray = {R.raw.sofa, R.raw.sofa, R.raw.lamp, R.raw.lamp, R.raw.table, R.raw.table, R.raw.chair,
+                R.raw.chair, R.raw.bed, R.raw.bed};
 
         for (int i = 0; i < nameArray.length; i++){
             values.put(KEY_CARD_TITLE, nameArray[i]);
             values.put(KEY_CARD_TYPE, typeArray[i]);
             values.put(KEY_CARD_CATEGORY, catArray[i]);
             values.put(KEY_CARD_DIAGRAM, diagramArray[i]);
-            values.put(KEY_CARD_AUDIO, audio);
+            values.put(KEY_CARD_AUDIO, audioArray[i]);
             DB.insert(TABLE_FLASHCARD, null, values);
         }
 
@@ -188,10 +189,46 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     //Flashcard Table Functions
+    public int getCardID (String cardTitle){
+        SQLiteDatabase DB = this.getReadableDatabase();
+
+        String sql = "Select " + KEY_CARD_ID + " from " + TABLE_FLASHCARD + " WHERE " + KEY_CARD_TITLE
+                + " = ?";
+        Cursor cursor = DB.rawQuery(sql, new String[]{cardTitle});
+
+        if (cursor != null ) {
+            if  (cursor.moveToFirst()) {
+                @SuppressLint("Range") int id = cursor.getInt(cursor.getColumnIndex(KEY_CARD_ID));
+                cursor.close();
+
+                return id;
+            }
+        }
+        return 0;
+    }
+
+    public String getCardTitle (int cardID){
+        SQLiteDatabase DB = this.getReadableDatabase();
+
+        String sql = "Select " + KEY_CARD_TITLE + " from " + TABLE_FLASHCARD + " WHERE " + KEY_CARD_ID
+                + " = ? ";
+        Cursor cursor = DB.rawQuery(sql, new String[]{String.valueOf(cardID)});
+
+        if (cursor != null ) {
+            if  (cursor.moveToFirst()) {
+                @SuppressLint("Range") String title = cursor.getString(cursor.getColumnIndex(KEY_CARD_TITLE));
+                cursor.close();
+
+                return title;
+            }
+        }
+        return null;
+    }
+
     public int getCardDiagram (String cardCat){
         SQLiteDatabase DB = this.getReadableDatabase();
 
-        String sql = "Select " + KEY_CARD_DIAGRAM + " from " + TABLE_FLASHCARD + " WHERE " + KEY_CARD_CATEGORY
+        String sql = "Select " + KEY_CARD_DIAGRAM + " from " + TABLE_FLASHCARD + " WHERE " + KEY_CARD_TITLE
                 + " = ? AND " + KEY_CARD_TYPE + " = ?";
         Cursor cursor = DB.rawQuery(sql, new String[]{cardCat, "LV1"});
 
@@ -206,37 +243,19 @@ public class DBHelper extends SQLiteOpenHelper {
         return 0;
     }
 
-    public String getCardTitle (String cardCat){
+    public int getCardAudio (int cardID){
         SQLiteDatabase DB = this.getReadableDatabase();
 
-        String sql = "Select " + KEY_CARD_TITLE + " from " + TABLE_FLASHCARD + " WHERE " + KEY_CARD_CATEGORY
+        String sql = "Select " + KEY_CARD_AUDIO + " from " + TABLE_FLASHCARD + " WHERE " + KEY_CARD_ID
                 + " = ? AND " + KEY_CARD_TYPE + " = ?";
-        Cursor cursor = DB.rawQuery(sql, new String[]{cardCat, "LV1"});
+        Cursor cursor = DB.rawQuery(sql, new String[]{String.valueOf(cardID), "LV1"});
 
         if (cursor != null ) {
             if  (cursor.moveToFirst()) {
-                @SuppressLint("Range") String title = cursor.getString(cursor.getColumnIndex(KEY_CARD_TITLE));
+                @SuppressLint("Range") int diagram = cursor.getInt(cursor.getColumnIndex(KEY_CARD_AUDIO));
                 cursor.close();
 
-                return title;
-            }
-        }
-        return null;
-    }
-
-    public int getCardID (String cardTitle){
-        SQLiteDatabase DB = this.getReadableDatabase();
-
-        String sql = "Select " + KEY_CARD_ID + " from " + TABLE_FLASHCARD + " WHERE " + KEY_CARD_TITLE
-                + " = ?";
-        Cursor cursor = DB.rawQuery(sql, new String[]{cardTitle});
-
-        if (cursor != null ) {
-            if  (cursor.moveToFirst()) {
-                @SuppressLint("Range") int id = cursor.getInt(cursor.getColumnIndex(KEY_CARD_ID));
-                cursor.close();
-
-                return id;
+                return diagram;
             }
         }
         return 0;
@@ -304,6 +323,20 @@ public class DBHelper extends SQLiteOpenHelper {
             }else{
                 return false;
             }
+        }
+    }
+
+    public boolean checkAvailability(int cardID){
+        SQLiteDatabase DB = this.getWritableDatabase();
+
+        String sql = "Select * from " + TABLE_USERCARD + " WHERE " + KEY_CARD_ID + "= ? AND " + KEY_CARD_STATUS + "= ?";
+        Cursor cursor = DB.rawQuery(sql, new String[]{String.valueOf(cardID), "display"});
+
+        if (cursor.getCount() > 0){
+            cursor.close();
+            return true;
+        }else{
+            return false;
         }
     }
 

@@ -31,4 +31,10 @@
     <string name="reading_btn">Reading</string>
     <string name="coin_image">coin image</string>
     <string name="coin">0</string>
+    <string name="card_diagram_description">Card Diagram</string>
+    <string name="card_title_description">Card Title</string>
+    <string name="back_button">Back Button</string>
+    <string name="x_button">X</string>
+    <string name="mascot">Mascot</string>
+    <string name="gallery_desc">Gallery</string>
 </resources>
