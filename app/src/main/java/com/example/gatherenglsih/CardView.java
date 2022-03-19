@@ -23,6 +23,7 @@ public class CardView extends AppCompatActivity {
 
     //vars
     public int selectedImage;
+    public int currentCardId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,22 +49,23 @@ public class CardView extends AppCompatActivity {
             coinTxt.setText(coinAmount);
             cardDiagram.setImageResource(selectedImage);
         }
-
         int cardID = db.getCardIDbyDiagram(String.valueOf(selectedImage));
-        String cardTitle = db.getCardTitle(cardID);
 
+        //Set Card Title
+        String cardTitle = db.getCardTitle(cardID);
         cardTitleTxt.setText(cardTitle);
 
+        //Play Audio Function
         playAudio.setOnClickListener(view -> {
             final MediaPlayer cardAudio = MediaPlayer.create(this, db.getCardAudio(cardID));
             cardAudio.start();
         });
 
-
-        if(cardID % 2 != 0){
+        //Upgrade Card Function
+        if(cardID % 2 != 0){//if it is a LV1 card
             boolean availability = db.checkAvailability(cardID+1);
 
-            if(!availability){//if the update card info is not stored in usercard table
+            if(!availability){//if the LV2 card info is not stored in usercard table
                 upgradeCard.setVisibility(View.VISIBLE);
 
                 upgradeCard.setOnClickListener(view -> {
@@ -78,24 +80,26 @@ public class CardView extends AppCompatActivity {
                         errorToast.show();
                     }
                 });
-            }else {
+            } else {
                 upgradeCard.setVisibility(View.GONE);
             }
         }else{
             upgradeCard.setVisibility(View.GONE);
         }
 
+        //Swap Card Diagrams Function
+        currentCardId = cardID;
 
         swapDiagram.setOnClickListener(view -> {
 
-            boolean swap = db.swapCardDiagram(cardID);
+            boolean swap = db.swapCardDiagram(currentCardId);
             if (swap){
-                if (cardID % 2 == 0 ){
-                    cardDiagram.setImageResource(db.getDiagram(cardID-1));
+                if (currentCardId % 2 == 0 ){// if current card is LV2
+                    currentCardId = currentCardId-1;
                 }else{
-                    cardDiagram.setImageResource(db.getDiagram(cardID+1));
+                    currentCardId = currentCardId+1;
                 }
-
+                cardDiagram.setImageResource(db.getDiagram(currentCardId));
             }
         });
 

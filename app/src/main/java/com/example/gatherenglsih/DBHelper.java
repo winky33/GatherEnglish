@@ -247,8 +247,8 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase DB = this.getReadableDatabase();
 
         String sql = "Select " + KEY_CARD_AUDIO + " from " + TABLE_FLASHCARD + " WHERE " + KEY_CARD_ID
-                + " = ? AND " + KEY_CARD_TYPE + " = ?";
-        Cursor cursor = DB.rawQuery(sql, new String[]{String.valueOf(cardID), "LV1"});
+                + " = ?";
+        Cursor cursor = DB.rawQuery(sql, new String[]{String.valueOf(cardID)});
 
         if (cursor != null ) {
             if  (cursor.moveToFirst()) {
@@ -329,8 +329,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public boolean checkAvailability(int cardID){
         SQLiteDatabase DB = this.getWritableDatabase();
 
-        String sql = "Select * from " + TABLE_USERCARD + " WHERE " + KEY_CARD_ID + "= ? AND " + KEY_CARD_STATUS + "= ?";
-        Cursor cursor = DB.rawQuery(sql, new String[]{String.valueOf(cardID), "display"});
+        String sql = "Select * from " + TABLE_USERCARD + " WHERE " + KEY_CARD_ID + "= ?";
+        Cursor cursor = DB.rawQuery(sql, new String[]{String.valueOf(cardID)});
 
         if (cursor.getCount() > 0){
             cursor.close();
@@ -350,8 +350,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         String sql = "Select * from " + TABLE_USERCARD + " WHERE " + KEY_CARD_ID + "= ?";
 
-        //check if even number
-        if (cardID % 2 == 0){
+        if (cardID % 2 == 0){//if displaying card is LV2
             int lv1CardID = cardID-1;
             Cursor cursor = DB.rawQuery(sql, new String[]{String.valueOf(cardID)});
             if (cursor.getCount() > 0) {

@@ -17,6 +17,7 @@ import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.View;
 
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -166,14 +167,16 @@ public class GatherCard extends AppCompatActivity {
                 dialog = dialogBuilder.create();
                 dialog.show();
 
+                cardAudio.start();
+
                 cardDiagramView.setImageResource(diagram);
 
                 dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                 dialog.getWindow().setGravity(Gravity.CENTER_HORIZONTAL);
+                dialog.getWindow().setLayout(550, 1200);
+
 
                 closeBtn.setOnClickListener(view -> dialog.dismiss());
-
-                cardAudio.start();
             }else{
                 Toast errorToast = Toast.makeText(GatherCard.this, "Flashcard Collected, Try On Other Object!", Toast.LENGTH_SHORT);
                 errorToast.show();
