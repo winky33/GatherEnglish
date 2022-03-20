@@ -22,7 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.gatherenglsih.ml.Model;
+import com.example.gatherenglsih.ml.ModelUnquant;
 
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
@@ -93,7 +93,7 @@ public class GatherCard extends AppCompatActivity {
     public String classifyImage(Bitmap image){
         String object;
         try {
-            Model model = Model.newInstance(getApplicationContext());
+            ModelUnquant model = ModelUnquant.newInstance(getApplicationContext());
 
             // Creates inputs for reference.
             TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.FLOAT32);
@@ -118,27 +118,31 @@ public class GatherCard extends AppCompatActivity {
             inputFeature0.loadBuffer(byteBuffer);
 
             // Runs model inference and gets result.
-            Model.Outputs outputs = model.process(inputFeature0);
+            ModelUnquant.Outputs outputs = model.process(inputFeature0);
             TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
 
             float[] confidences = outputFeature0.getFloatArray();
             // find the index of the class with the biggest confidence.
-            int maxPos = 0;
-            float maxConfidence = 0;
+            int maxPos = 999;
+            float maxConfidence = 0.8f;
             for(int i = 0; i < confidences.length; i++){
                 if(confidences[i] > maxConfidence){
                     maxConfidence = confidences[i];
                     maxPos = i;
                 }
             }
-            String[] classes = {"Sofa", "Lamp", "Table", "Chair"};
-            object = classes[maxPos];
-            result.setText(object);
+
+            if(maxPos!=999){
+                String[] classes = {"Sofa", "Lamp", "Table", "Chair", "Bed", "Clock", "Door", "Television"};
+                object = classes[maxPos];
+                result.setText(object);
+                return object;
+            }
 
             // Releases model resources if no longer used.
             model.close();
 
-            return object;
+            return "invalid";
         } catch (IOException e) {
             return "error";
         }
