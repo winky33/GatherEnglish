@@ -17,7 +17,6 @@ import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.View;
 
-import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -141,7 +140,6 @@ public class GatherCard extends AppCompatActivity {
 
             return object;
         } catch (IOException e) {
-            // TODO Handle the exception
             return "error";
         }
     }

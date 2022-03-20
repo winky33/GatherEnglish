@@ -1,12 +1,21 @@
 <resources>
     <string name="app_name">Gather Englsih</string>
+    <string name="launch_text">Tap Anywhere To Continue</string>
+    <string name="back_button">Back Button</string>
+    <string name="x_button">X</string>
+
+    <!-- Bottom Nav Bar -->
     <string name="nav_setting_title">Setting</string>
     <string name="nav_home_title">Home</string>
     <string name="nav_dashboard_title">Dashboard</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
+    <!-- Home -->
     <string name="home_text">Welcome, Username</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="gather_new_card_btn">Gather New Card</string>
+    <string name="card_gallery_btn">Card Gallery</string>
+    <string name="exercise_btn">Exercise</string>
+    <string name="mascot">Mascot</string>
+
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
     <string name="sync_header">Sync</string>
@@ -21,20 +30,19 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+
+    <!-- Dashboard -->
     <string name="dashboard_text">Username</string>
-    <string name="gather_new_card_btn">Gather New Card</string>
-    <string name="card_gallery_btn">Card Gallery</string>
-    <string name="exercise_btn">Exercise</string>
-    <string name="launch_text">Tap Anywhere To Continue</string>
+
+    <!-- Exercise -->
     <string name="listening_btn">Listening</string>
     <string name="spelling_btn">Spelling</string>
     <string name="reading_btn">Reading</string>
+
+    <!-- Gallery -->
     <string name="coin_image">coin image</string>
     <string name="coin">0</string>
     <string name="card_diagram_description">Card Diagram</string>
     <string name="card_title_description">Card Title</string>
-    <string name="back_button">Back Button</string>
-    <string name="x_button">X</string>
-    <string name="mascot">Mascot</string>
     <string name="gallery_desc">Gallery</string>
 </resources>

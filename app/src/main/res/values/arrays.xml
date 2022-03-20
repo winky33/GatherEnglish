@@ -22,6 +22,10 @@
         <item>Chair</item>
         <item>Bed</item>
         <item>Bed</item>
+        <item>Clock</item>
+        <item>Clock</item>
+        <item>Door</item>
+        <item>Door</item>
     </string-array>
 
     <string-array name="card_type">
@@ -35,19 +39,27 @@
         <item>LV2</item>
         <item tools:ignore="Typos">LV1</item>
         <item>LV2</item>
+        <item tools:ignore="Typos">LV1</item>
+        <item>LV2</item>
+        <item tools:ignore="Typos">LV1</item>
+        <item>LV2</item>
     </string-array>
 
     <string-array name="card_category">
-        <item>sofa</item>
-        <item>sofa</item>
-        <item>lamp</item>
-        <item>lamp</item>
-        <item>table</item>
-        <item>table</item>
-        <item>chair</item>
-        <item>chair</item>
-        <item>bed</item>
-        <item>bed</item>
+        <item>Furniture</item>
+        <item>Furniture</item>
+        <item>Furnishing</item>
+        <item>Furnishing</item>
+        <item>Furniture</item>
+        <item>Furniture</item>
+        <item>Furniture</item>
+        <item>Furniture</item>
+        <item>Furniture</item>
+        <item>Furniture</item>
+        <item>Furnishing</item>
+        <item>Furnishing</item>
+        <item>Fixture</item>
+        <item>Fixture</item>
     </string-array>
 
 </resources>

@@ -74,12 +74,13 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
         int[] diagramArray = {R.drawable.sofa1, R.drawable.sofa, R.drawable.lamp, R.drawable.lamp1, R.drawable.table1,
-                R.drawable.table, R.drawable.chair, R.drawable.chair1, R.drawable.bed, R.drawable.bed1};
+                R.drawable.table, R.drawable.chair, R.drawable.chair1, R.drawable.bed, R.drawable.bed1, R.drawable.clock,
+                R.drawable.clock1, R.drawable.door, R.drawable.door1};
         String[] nameArray = res.getStringArray(R.array.card_name);
         String[] typeArray = res.getStringArray(R.array.card_type);
         String[] catArray = res.getStringArray(R.array.card_category);
         int[] audioArray = {R.raw.sofa, R.raw.sofa, R.raw.lamp, R.raw.lamp, R.raw.table, R.raw.table, R.raw.chair,
-                R.raw.chair, R.raw.bed, R.raw.bed};
+                R.raw.chair, R.raw.bed, R.raw.bed, R.raw.clock, R.raw.clock, R.raw.door, R.raw.door};
 
         for (int i = 0; i < nameArray.length; i++){
             values.put(KEY_CARD_TITLE, nameArray[i]);

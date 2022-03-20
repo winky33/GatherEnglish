@@ -7,8 +7,6 @@
     android:background="@color/home_background"
     tools:context=".HomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
