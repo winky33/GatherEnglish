@@ -7,6 +7,7 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -84,7 +85,7 @@ public class DBHelper extends SQLiteOpenHelper {
         int[] audioArray = {R.raw.sofa, R.raw.sofa, R.raw.lamp, R.raw.lamp, R.raw.table, R.raw.table, R.raw.chair,
                 R.raw.chair, R.raw.bed, R.raw.bed, R.raw.clock, R.raw.clock, R.raw.door, R.raw.door};
 
-        for (int i = 0; i < nameArray.length; i++){
+        for (int i = 0; i < nameArray.length; i++) {
             values.put(KEY_CARD_TITLE, nameArray[i]);
             values.put(KEY_CARD_TYPE, typeArray[i]);
             values.put(KEY_CARD_CATEGORY, catArray[i]);
@@ -106,7 +107,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     // User Table Functions
-    public boolean addNewUser(String userID, String UserName, String RegisterDate, int CoinAmount){
+    public boolean addNewUser(String userID, String UserName, String RegisterDate, int CoinAmount) {
         SQLiteDatabase DB = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
@@ -134,7 +135,7 @@ public class DBHelper extends SQLiteOpenHelper {
             long result = DB.update(TABLE_USER, values, KEY_USER_ID + "= ?", new String[]{userID});
 
             return result != -1;
-        }else{
+        } else {
             return false;
         }
 
@@ -147,7 +148,7 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = DB.rawQuery(sql, new String[]{userID});
 
         if (cursor != null) {
-            if(cursor.getCount()>0){
+            if (cursor.getCount() > 0) {
                 cursor.close();
                 return true;
             } else {
@@ -163,8 +164,8 @@ public class DBHelper extends SQLiteOpenHelper {
         String sql = "Select " + KEY_USERNAME + " from " + TABLE_USER + " where " + KEY_USER_ID + "= ?";
         Cursor cursor = DB.rawQuery(sql, new String[]{userID});
 
-        if (cursor != null ) {
-            if  (cursor.moveToFirst()) {
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
                 @SuppressLint("Range") String username = cursor.getString(cursor.getColumnIndex(KEY_USERNAME));
                 cursor.close();
 
@@ -180,8 +181,8 @@ public class DBHelper extends SQLiteOpenHelper {
         String sql = "Select " + KEY_COIN_AMOUNT + " from " + TABLE_USER + " where " + KEY_USER_ID + "= ?";
         Cursor cursor = DB.rawQuery(sql, new String[]{userID});
 
-        if (cursor != null ) {
-            if  (cursor.moveToFirst()) {
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
                 @SuppressLint("Range") int coinAmount = cursor.getInt(cursor.getColumnIndex(KEY_COIN_AMOUNT));
                 cursor.close();
 
@@ -192,15 +193,15 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     //Flashcard Table Functions
-    public int getCardID (String cardTitle){
+    public int getCardID(String cardTitle) {
         SQLiteDatabase DB = this.getReadableDatabase();
 
         String sql = "Select " + KEY_CARD_ID + " from " + TABLE_FLASHCARD + " WHERE " + KEY_CARD_TITLE
                 + " = ?";
         Cursor cursor = DB.rawQuery(sql, new String[]{cardTitle});
 
-        if (cursor != null ) {
-            if  (cursor.moveToFirst()) {
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
                 @SuppressLint("Range") int id = cursor.getInt(cursor.getColumnIndex(KEY_CARD_ID));
                 cursor.close();
 
@@ -210,15 +211,15 @@ public class DBHelper extends SQLiteOpenHelper {
         return 0;
     }
 
-    public String getCardTitle (int cardID){
+    public String getCardTitle(int cardID) {
         SQLiteDatabase DB = this.getReadableDatabase();
 
         String sql = "Select " + KEY_CARD_TITLE + " from " + TABLE_FLASHCARD + " WHERE " + KEY_CARD_ID
                 + " = ? ";
         Cursor cursor = DB.rawQuery(sql, new String[]{String.valueOf(cardID)});
 
-        if (cursor != null ) {
-            if  (cursor.moveToFirst()) {
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
                 @SuppressLint("Range") String title = cursor.getString(cursor.getColumnIndex(KEY_CARD_TITLE));
                 cursor.close();
 
@@ -228,15 +229,15 @@ public class DBHelper extends SQLiteOpenHelper {
         return null;
     }
 
-    public int getCardDiagram (String cardCat){
+    public int getCardDiagram(String cardCat) {
         SQLiteDatabase DB = this.getReadableDatabase();
 
         String sql = "Select " + KEY_CARD_DIAGRAM + " from " + TABLE_FLASHCARD + " WHERE " + KEY_CARD_TITLE
                 + " = ? AND " + KEY_CARD_TYPE + " = ?";
         Cursor cursor = DB.rawQuery(sql, new String[]{cardCat, "LV1"});
 
-        if (cursor != null ) {
-            if  (cursor.moveToFirst()) {
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
                 @SuppressLint("Range") int diagram = cursor.getInt(cursor.getColumnIndex(KEY_CARD_DIAGRAM));
                 cursor.close();
 
@@ -246,15 +247,15 @@ public class DBHelper extends SQLiteOpenHelper {
         return 0;
     }
 
-    public int getCardAudio (int cardID){
+    public int getCardAudio(int cardID) {
         SQLiteDatabase DB = this.getReadableDatabase();
 
         String sql = "Select " + KEY_CARD_AUDIO + " from " + TABLE_FLASHCARD + " WHERE " + KEY_CARD_ID
                 + " = ?";
         Cursor cursor = DB.rawQuery(sql, new String[]{String.valueOf(cardID)});
 
-        if (cursor != null ) {
-            if  (cursor.moveToFirst()) {
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
                 @SuppressLint("Range") int diagram = cursor.getInt(cursor.getColumnIndex(KEY_CARD_AUDIO));
                 cursor.close();
 
@@ -264,15 +265,15 @@ public class DBHelper extends SQLiteOpenHelper {
         return 0;
     }
 
-    public int getCardIDbyDiagram (String cardDiagram){
+    public int getCardIDbyDiagram(String cardDiagram) {
         SQLiteDatabase DB = this.getReadableDatabase();
 
         String sql = "Select " + KEY_CARD_ID + " from " + TABLE_FLASHCARD + " WHERE " + KEY_CARD_DIAGRAM
                 + " = ?";
         Cursor cursor = DB.rawQuery(sql, new String[]{cardDiagram});
 
-        if (cursor != null ) {
-            if  (cursor.moveToFirst()) {
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
                 @SuppressLint("Range") int id = cursor.getInt(cursor.getColumnIndex(KEY_CARD_ID));
                 cursor.close();
 
@@ -308,9 +309,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
         long result = DB.insert(TABLE_USERCARD, null, values);
 
-        if(result==-1){
+        if (result == -1) {
             return false;
-        }else{
+        } else {
             ContentValues updateValue = new ContentValues();
 
             updateValue.put(KEY_CARD_STATUS, "hide");
@@ -323,22 +324,22 @@ public class DBHelper extends SQLiteOpenHelper {
                 long result2 = DB.update(TABLE_USERCARD, updateValue, KEY_CARD_ID + "= ?", new String[]{String.valueOf(cardId)});
 
                 return result2 != -1;
-            }else{
+            } else {
                 return false;
             }
         }
     }
 
-    public boolean checkAvailability(int cardID){
+    public boolean checkAvailability(int cardID) {
         SQLiteDatabase DB = this.getWritableDatabase();
 
         String sql = "Select * from " + TABLE_USERCARD + " WHERE " + KEY_CARD_ID + "= ?";
         Cursor cursor = DB.rawQuery(sql, new String[]{String.valueOf(cardID)});
 
-        if (cursor.getCount() > 0){
+        if (cursor.getCount() > 0) {
             cursor.close();
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -353,8 +354,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
         String sql = "Select * from " + TABLE_USERCARD + " WHERE " + KEY_CARD_ID + "= ?";
 
-        if (cardID % 2 == 0){//if displaying card is LV2
-            int lv1CardID = cardID-1;
+        if (cardID % 2 == 0) {//if displaying card is LV2
+            int lv1CardID = cardID - 1;
             Cursor cursor = DB.rawQuery(sql, new String[]{String.valueOf(cardID)});
             if (cursor.getCount() > 0) {
                 cursor.close();
@@ -371,15 +372,15 @@ public class DBHelper extends SQLiteOpenHelper {
                         long result2 = DB.update(TABLE_USERCARD, values, KEY_CARD_ID + "= ?", new String[]{String.valueOf(lv1CardID)});
 
                         return result2 != -1;
-                    }else{
+                    } else {
                         return false;
                     }
                 }
-            }else{
+            } else {
                 return false;
             }
-        }else{
-            int lv2CardID = cardID+1;
+        } else {
+            int lv2CardID = cardID + 1;
             Cursor cursor = DB.rawQuery(sql, new String[]{String.valueOf(cardID)});
             if (cursor.getCount() > 0) {
                 cursor.close();
@@ -396,26 +397,26 @@ public class DBHelper extends SQLiteOpenHelper {
                         long result2 = DB.update(TABLE_USERCARD, values, KEY_CARD_ID + "= ?", new String[]{String.valueOf(lv2CardID)});
 
                         return result2 != -1;
-                    }else{
+                    } else {
                         return false;
                     }
                 }
-            }else{
+            } else {
                 return false;
             }
         }
     }
 
-    public int getDiagram (int cardID){
+    public int getDiagram(int cardID) {
         SQLiteDatabase DB = this.getReadableDatabase();
 
         String sql = "SELECT " + KEY_CARD_DIAGRAM + " FROM " + TABLE_FLASHCARD + " INNER JOIN "
-                + TABLE_USERCARD + " ON " + TABLE_FLASHCARD+ "." +KEY_CARD_ID + " = " +TABLE_USERCARD + "." +KEY_CARD_ID
-                + " WHERE " + TABLE_USERCARD + "." +KEY_CARD_ID + " = ?" + " AND " + KEY_CARD_STATUS + " = ?";
+                + TABLE_USERCARD + " ON " + TABLE_FLASHCARD + "." + KEY_CARD_ID + " = " + TABLE_USERCARD + "." + KEY_CARD_ID
+                + " WHERE " + TABLE_USERCARD + "." + KEY_CARD_ID + " = ?" + " AND " + KEY_CARD_STATUS + " = ?";
         Cursor cursor = DB.rawQuery(sql, new String[]{String.valueOf(cardID), "display"});
 
-        if (cursor != null ) {
-            if  (cursor.moveToFirst()) {
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
                 @SuppressLint("Range") int diagram = cursor.getInt(cursor.getColumnIndex(KEY_CARD_DIAGRAM));
                 cursor.close();
 
@@ -425,11 +426,11 @@ public class DBHelper extends SQLiteOpenHelper {
         return 0;
     }
 
-    public ArrayList<Integer> getFlashcardDiagrams (){
+    public ArrayList<Integer> getFlashcardDiagrams() {
         SQLiteDatabase DB = this.getReadableDatabase();
 
         String sql = "SELECT " + KEY_CARD_DIAGRAM + " FROM " + TABLE_FLASHCARD + " INNER JOIN "
-                + TABLE_USERCARD + " ON " + TABLE_FLASHCARD+ "." +KEY_CARD_ID + " = " +TABLE_USERCARD + "." +KEY_CARD_ID
+                + TABLE_USERCARD + " ON " + TABLE_FLASHCARD + "." + KEY_CARD_ID + " = " + TABLE_USERCARD + "." + KEY_CARD_ID
                 + " WHERE " + KEY_CARD_STATUS + " = ?";
         Cursor cursor = DB.rawQuery(sql, new String[]{"display"});
 
@@ -445,59 +446,65 @@ public class DBHelper extends SQLiteOpenHelper {
         return diagram;
     }
 
-    public boolean getListeningQuestions (ArrayList<ListeningQuizModel> quizModelArrayList){
+    public boolean checkCardQty() {
         SQLiteDatabase DB = this.getReadableDatabase();
-        ArrayList<ListeningQuizModel> questions = new ArrayList<>();
+
+        String checkSql = "Select * from " + TABLE_USERCARD;
+        Cursor check = DB.rawQuery(checkSql, null);
+
+        if (check.getCount() >= 5) {
+            check.close();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    public void getListeningQuestions(ArrayList<ListeningQuizModel> quizModelArrayList) {
+        SQLiteDatabase DB = this.getReadableDatabase();
+
         ArrayList<Integer> audioList = new ArrayList<>();
         ArrayList<Integer> diagramList = new ArrayList<>();
         ArrayList<String> titleList = new ArrayList<>();
         ArrayList<Integer> indexList = new ArrayList<>();
 
-        String checksql = "Select * from " + TABLE_USERCARD;
-        Cursor check = DB.rawQuery(checksql, null);
+        String sql = "SELECT * FROM " + TABLE_FLASHCARD + " INNER JOIN "
+                + TABLE_USERCARD + " ON " + TABLE_FLASHCARD + "." + KEY_CARD_ID + " = " + TABLE_USERCARD + "." + KEY_CARD_ID
+                + " WHERE " + KEY_CARD_TYPE + " = ? " + " ORDER BY RANDOM() LIMIT 4";
 
-        if (check.getCount() >= 5){
-            String sql = "SELECT * FROM " + TABLE_FLASHCARD + " INNER JOIN "
-                    + TABLE_USERCARD + " ON " + TABLE_FLASHCARD+ "." +KEY_CARD_ID + " = " +TABLE_USERCARD + "." +KEY_CARD_ID
-                    + " WHERE " + KEY_CARD_TYPE + " = ? "+ " ORDER BY RANDOM() LIMIT 4";
+        Cursor cursor = DB.rawQuery(sql, new String[]{"LV1"});
 
-            Cursor cursor = DB.rawQuery(sql, new String[]{"LV1"});
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                @SuppressLint("Range") int audio = cursor.getInt(cursor.getColumnIndex(KEY_CARD_AUDIO));
+                @SuppressLint("Range") int diagram = cursor.getInt(cursor.getColumnIndex(KEY_CARD_DIAGRAM));
+                @SuppressLint("Range") String title = cursor.getString(cursor.getColumnIndex(KEY_CARD_TITLE));
 
-            if (cursor != null){
-                while (cursor.moveToNext()){
-                    @SuppressLint("Range") int audio = cursor.getInt(cursor.getColumnIndex(KEY_CARD_AUDIO));
-                    @SuppressLint("Range") int diagram = cursor.getInt(cursor.getColumnIndex(KEY_CARD_DIAGRAM));
-                    @SuppressLint("Range") String title = cursor.getString(cursor.getColumnIndex(KEY_CARD_TITLE));
-
-                    audioList.add(audio);
-                    diagramList.add(diagram);
-                    titleList.add(title);
-                }
+                audioList.add(audio);
+                diagramList.add(diagram);
+                titleList.add(title);
             }
-
-            Random random = new Random();
-
-            for (int i = 0; i<5; i++){
-                indexList.add(i);
-            }
-            Collections.shuffle(indexList);
-
-            int quesAudio = indexList.get(random.nextInt(indexList.size()));
-            int opt1 = indexList.get(0);
-            int opt2 = indexList.get(1);
-            int opt3 = indexList.get(2);
-            int opt4 = indexList.get(3);
-
-            questions.add(new ListeningQuizModel(audioList.get(quesAudio), titleList.get(opt1), diagramList.get(opt1),
-                    titleList.get(opt2), diagramList.get(opt2), titleList.get(opt3), diagramList.get(opt3), titleList.get(opt4),
-                    diagramList.get(opt4), titleList.get(quesAudio)));
-
-            return true;
-        } else{
-            return false;
+            cursor.close();
         }
-    }
 
+        Random random = new Random();
+
+        for (int i = 0; i < 4; i++) {
+            indexList.add(i);
+        }
+        Collections.shuffle(indexList);
+
+        int quesAudio = indexList.get(random.nextInt(indexList.size()));
+        int opt1 = indexList.get(0);
+        int opt2 = indexList.get(1);
+        int opt3 = indexList.get(2);
+        int opt4 = indexList.get(3);
+
+        quizModelArrayList.add(new ListeningQuizModel(audioList.get(quesAudio), titleList.get(opt1), diagramList.get(opt1),
+                titleList.get(opt2), diagramList.get(opt2), titleList.get(opt3), diagramList.get(opt3), titleList.get(opt4),
+                diagramList.get(opt4), titleList.get(quesAudio)));
+    }
 }
 
 

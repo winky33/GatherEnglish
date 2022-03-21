@@ -3,7 +3,9 @@ package com.example.gatherenglsih;
 import static androidx.core.content.PermissionChecker.checkSelfPermission;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -108,10 +110,28 @@ public class HomeFragment extends Fragment {
         exercise_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), Exercises.class);
-                startActivity(intent);
+                boolean exerciseRequirement = db.checkCardQty();
+
+                if (exerciseRequirement){
+                    exercise_btn.setClickable(true);
+                    Intent intent = new Intent(getActivity(), Exercises.class);
+                    startActivity(intent);
+                }else{
+                    exercise_btn.setClickable(false);
+                    new AlertDialog.Builder(getActivity())
+                            .setTitle("Alert")
+                            .setMessage("Please collect at least 5 Flashcard to unlock the Exercise")
+                            .setCancelable(false).setPositiveButton("Go to Gather Card", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            startActivity(new Intent(getActivity(),GatherCard.class));
+                        }
+                    }).show();
+                }
             }
         });
+
+
 
         return rootView;
     }
