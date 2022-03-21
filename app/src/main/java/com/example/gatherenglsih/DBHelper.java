@@ -9,6 +9,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 public class DBHelper extends SQLiteOpenHelper {
 
@@ -441,6 +443,59 @@ public class DBHelper extends SQLiteOpenHelper {
             cursor.close();
         }
         return diagram;
+    }
+
+    public boolean getListeningQuestions (ArrayList<ListeningQuizModel> quizModelArrayList){
+        SQLiteDatabase DB = this.getReadableDatabase();
+        ArrayList<ListeningQuizModel> questions = new ArrayList<>();
+        ArrayList<Integer> audioList = new ArrayList<>();
+        ArrayList<Integer> diagramList = new ArrayList<>();
+        ArrayList<String> titleList = new ArrayList<>();
+        ArrayList<Integer> indexList = new ArrayList<>();
+
+        String checksql = "Select * from " + TABLE_USERCARD;
+        Cursor check = DB.rawQuery(checksql, null);
+
+        if (check.getCount() >= 5){
+            String sql = "SELECT * FROM " + TABLE_FLASHCARD + " INNER JOIN "
+                    + TABLE_USERCARD + " ON " + TABLE_FLASHCARD+ "." +KEY_CARD_ID + " = " +TABLE_USERCARD + "." +KEY_CARD_ID
+                    + " WHERE " + KEY_CARD_TYPE + " = ? "+ " ORDER BY RANDOM() LIMIT 4";
+
+            Cursor cursor = DB.rawQuery(sql, new String[]{"LV1"});
+
+            if (cursor != null){
+                while (cursor.moveToNext()){
+                    @SuppressLint("Range") int audio = cursor.getInt(cursor.getColumnIndex(KEY_CARD_AUDIO));
+                    @SuppressLint("Range") int diagram = cursor.getInt(cursor.getColumnIndex(KEY_CARD_DIAGRAM));
+                    @SuppressLint("Range") String title = cursor.getString(cursor.getColumnIndex(KEY_CARD_TITLE));
+
+                    audioList.add(audio);
+                    diagramList.add(diagram);
+                    titleList.add(title);
+                }
+            }
+
+            Random random = new Random();
+
+            for (int i = 0; i<5; i++){
+                indexList.add(i);
+            }
+            Collections.shuffle(indexList);
+
+            int quesAudio = indexList.get(random.nextInt(indexList.size()));
+            int opt1 = indexList.get(0);
+            int opt2 = indexList.get(1);
+            int opt3 = indexList.get(2);
+            int opt4 = indexList.get(3);
+
+            questions.add(new ListeningQuizModel(audioList.get(quesAudio), titleList.get(opt1), diagramList.get(opt1),
+                    titleList.get(opt2), diagramList.get(opt2), titleList.get(opt3), diagramList.get(opt3), titleList.get(opt4),
+                    diagramList.get(opt4), titleList.get(quesAudio)));
+
+            return true;
+        } else{
+            return false;
+        }
     }
 
 }

@@ -17,6 +17,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GatherEnglsih">
         <activity
+            android:name=".ListeningExercise"
+            android:exported="true" />
+        <activity
+            android:name=".SpellingExercise"
+            android:exported="true" />
+        <activity
             android:name=".CardView"
             android:exported="true" />
         <activity
