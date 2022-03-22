@@ -94,12 +94,13 @@
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="10dp"
                 android:orientation="vertical"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="10dp">
+                app:cardCornerRadius="10dp"
+                app:cardElevation="5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_margin="5dp"
                     android:orientation="vertical">
 
                     <ImageView
@@ -133,12 +134,13 @@
                 android:layout_marginEnd="40dp"
                 android:layout_marginBottom="10dp"
                 android:orientation="vertical"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="10dp">
+                app:cardCornerRadius="10dp"
+                app:cardElevation="5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_margin="5dp"
                     android:orientation="vertical">
 
                     <ImageView
@@ -177,12 +179,13 @@
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="10dp"
                 android:orientation="vertical"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="10dp">
+                app:cardCornerRadius="10dp"
+                app:cardElevation="5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_margin="5dp"
                     android:orientation="vertical">
 
                     <ImageView
@@ -216,12 +219,13 @@
                 android:layout_marginEnd="40dp"
                 android:layout_marginBottom="10dp"
                 android:orientation="vertical"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="10dp">
+                app:cardCornerRadius="10dp"
+                app:cardElevation="5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_margin="5dp"
                     android:orientation="vertical">
 
                     <ImageView
@@ -249,11 +253,12 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/listening_submit_button"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:layout_marginTop="5dp"
         android:layout_gravity="center"
         android:textSize="18sp"
-        android:text="@string/continue_btn"/>
+        android:text="@string/submit_btn"/>
 
 </LinearLayout>

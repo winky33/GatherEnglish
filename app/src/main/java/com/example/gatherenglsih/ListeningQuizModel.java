@@ -10,9 +10,9 @@ public class ListeningQuizModel {
     private int option3Diagram;
     private String option4;
     private int option4Diagram;
-    private String answer;
+    private int answer;
 
-    public ListeningQuizModel(int questionAudio, String option1, int option1Diagram, String option2, int option2Diagram, String option3, int option3Diagram, String option4, int option4Diagram, String answer) {
+    public ListeningQuizModel(int questionAudio, String option1, int option1Diagram, String option2, int option2Diagram, String option3, int option3Diagram, String option4, int option4Diagram, int answer) {
         this.questionAudio = questionAudio;
         this.option1 = option1;
         this.option1Diagram = option1Diagram;
@@ -97,11 +97,11 @@ public class ListeningQuizModel {
         this.option4Diagram = option4Diagram;
     }
 
-    public String getAnswer() {
+    public int getAnswer() {
         return answer;
     }
 
-    public void setAnswer(String answer) {
+    public void setAnswer(int answer) {
         this.answer = answer;
     }
 }

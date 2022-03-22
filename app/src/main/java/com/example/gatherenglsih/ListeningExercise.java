@@ -3,33 +3,32 @@ package com.example.gatherenglsih;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.view.View;
+import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Random;
+
 
 public class ListeningExercise extends AppCompatActivity {
     DBHelper db = new DBHelper(ListeningExercise.this);
-    Random random;
 
     //widgets
     private TextView questionNumber, opt1Txt, opt2Txt, opt3Txt, opt4Txt;
     private ImageButton audioBtn;
     private CardView opt1Btn, opt2Btn, opt3Btn, opt4Btn;
     private ImageView opt1Diagram, opt2Diagram, opt3Diagram, opt4Diagram;
+    private Button submitBtn;
 
     //vars
     private ArrayList<ListeningQuizModel> quizModelArrayList;
-    int currentScore = 0, questionAttempted = 0, currentPos;
+    int currentScore = 0, currentPos = 1, mSelectedOptionPosition = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,98 +49,121 @@ public class ListeningExercise extends AppCompatActivity {
         opt2Txt = findViewById(R.id.listening_opt2_title);
         opt3Txt = findViewById(R.id.listening_opt3_title);
         opt4Txt = findViewById(R.id.listening_opt4_title);
+        submitBtn = findViewById(R.id.listening_submit_button);
         quizModelArrayList = new ArrayList<>();
-        random = new Random();
 
         //generate 5 questions
-        db.getListeningQuestions(quizModelArrayList);
-        db.getListeningQuestions(quizModelArrayList);
-        db.getListeningQuestions(quizModelArrayList);
-        db.getListeningQuestions(quizModelArrayList);
-        db.getListeningQuestions(quizModelArrayList);
-        for (int x = 0; x < quizModelArrayList.size(); x++){
-            for (int y = 1; y < quizModelArrayList.size(); y++){
-                if (quizModelArrayList.get(y).getQuestionAudio() == quizModelArrayList.get(x).getQuestionAudio()){
-                    quizModelArrayList.remove(y);
-                    db.getListeningQuestions(quizModelArrayList);
-                }
-            }
+        while (quizModelArrayList.size()< 5){
+            db.getListeningQuestions(quizModelArrayList);
         }
 
-        currentPos = random.nextInt(quizModelArrayList.size());
-        setDataToViews(currentPos);
-        audioBtn.performClick();
+        setDataToViews(currentPos-1);
 
         audioBtn.setOnClickListener(view -> {
-            int audio = quizModelArrayList.get(currentPos).getQuestionAudio();
+            int audio = quizModelArrayList.get(currentPos-1).getQuestionAudio();
             final MediaPlayer cardAudio = MediaPlayer.create(ListeningExercise.this, audio);
             cardAudio.start();
         });
 
-        opt1Btn.setOnClickListener(view -> {
-            if(quizModelArrayList.get(currentPos).getAnswer().trim().equalsIgnoreCase(
-                    opt1Txt.getText().toString().trim())){
-                currentScore++;
-            }
-            questionAttempted++;
-            currentPos = random.nextInt(quizModelArrayList.size());
-            setDataToViews(currentPos);
-        });
+        opt1Btn.setOnClickListener(view -> selectedOptionView(opt1Btn, 1));
 
-        opt2Btn.setOnClickListener(view -> {
-            if(quizModelArrayList.get(currentPos).getAnswer().trim().equalsIgnoreCase(
-                    opt2Txt.getText().toString().trim())){
-                currentScore++;
-            }
-            questionAttempted++;
-            currentPos = random.nextInt(quizModelArrayList.size());
-            setDataToViews(currentPos);
-        });
+        opt2Btn.setOnClickListener(view -> selectedOptionView(opt2Btn, 2));
 
-        opt3Btn.setOnClickListener(view -> {
-            if(quizModelArrayList.get(currentPos).getAnswer().trim().equalsIgnoreCase(
-                    opt3Txt.getText().toString().trim())){
-                currentScore++;
-            }
-            questionAttempted++;
-            currentPos = random.nextInt(quizModelArrayList.size());
-            setDataToViews(currentPos);
-        });
+        opt3Btn.setOnClickListener(view -> selectedOptionView(opt3Btn, 3));
 
-        opt4Btn.setOnClickListener(view -> {
-            if(quizModelArrayList.get(currentPos).getAnswer().trim().equalsIgnoreCase(
-                    opt4Txt.getText().toString().trim())){
-                currentScore++;
+        opt4Btn.setOnClickListener(view -> selectedOptionView(opt4Btn, 4));
+
+        submitBtn.setOnClickListener(view -> {
+            if(mSelectedOptionPosition == 0){
+                currentPos ++;
+
+                if (currentPos <= quizModelArrayList.size()){
+                    setDataToViews(currentPos-1);
+                }else{
+                    Toast completeToast = Toast.makeText(ListeningExercise.this, "You have successfully completed the Quiz",
+                            Toast.LENGTH_SHORT);
+                    completeToast.show();
+                }
+            }else{
+                if(quizModelArrayList.get(currentPos-1).getAnswer() != mSelectedOptionPosition){
+                    answerView(mSelectedOptionPosition, Color.RED);
+                    answerView(quizModelArrayList.get(currentPos-1).getAnswer(), Color.GREEN);
+                }else{
+                    answerView(mSelectedOptionPosition, Color.GREEN);
+                    currentScore++;
+                }
+
+                Log.i("Submit Answer", "CorrectAns: "+quizModelArrayList.get(currentPos-1).getAnswer()+ "Submit: "+mSelectedOptionPosition);
+
+                if (currentPos == quizModelArrayList.size()){
+                    submitBtn.setText("FINISH");
+                }else{
+                    submitBtn.setText("CONTINUE");
+                }
+                mSelectedOptionPosition = 0;
             }
-            questionAttempted++;
-            currentPos = random.nextInt(quizModelArrayList.size());
-            setDataToViews(currentPos);
         });
 
     }
 
     private void setDataToViews(int currentPos){
-        questionNumber.setText("Question " + questionAttempted);
+        int questionNum = currentPos+1;
+        questionNumber.setText("Question " + questionNum);
 
-        if(questionAttempted == 5){
-            new AlertDialog.Builder(ListeningExercise.this)
-                    .setTitle("Congratulation")
-                    .setMessage("Your Score is \n"+currentScore+"/5\n You have Earned "+currentScore+" coins")
-                    .setCancelable(true).setPositiveButton("Back to Home", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    startActivity(new Intent(ListeningExercise.this,Homepage.class));
-                }
-            }).show();
+        defaultOptionView();
+        audioBtn.performClick();
+
+        if (currentPos == quizModelArrayList.size()){
+            submitBtn.setText("FINISH");
         }else{
-            opt1Txt.setText(quizModelArrayList.get(currentPos).getOption1());
-            opt2Txt.setText(quizModelArrayList.get(currentPos).getOption2());
-            opt3Txt.setText(quizModelArrayList.get(currentPos).getOption3());
-            opt4Txt.setText(quizModelArrayList.get(currentPos).getOption4());
-            opt1Diagram.setImageResource(quizModelArrayList.get(currentPos).getOption1Diagram());
-            opt2Diagram.setImageResource(quizModelArrayList.get(currentPos).getOption2Diagram());
-            opt3Diagram.setImageResource(quizModelArrayList.get(currentPos).getOption3Diagram());
-            opt4Diagram.setImageResource(quizModelArrayList.get(currentPos).getOption4Diagram());
+            submitBtn.setText("SUBMIT");
         }
+
+        opt1Txt.setText(quizModelArrayList.get(currentPos).getOption1());
+        opt2Txt.setText(quizModelArrayList.get(currentPos).getOption2());
+        opt3Txt.setText(quizModelArrayList.get(currentPos).getOption3());
+        opt4Txt.setText(quizModelArrayList.get(currentPos).getOption4());
+        opt1Diagram.setImageResource(quizModelArrayList.get(currentPos).getOption1Diagram());
+        opt2Diagram.setImageResource(quizModelArrayList.get(currentPos).getOption2Diagram());
+        opt3Diagram.setImageResource(quizModelArrayList.get(currentPos).getOption3Diagram());
+        opt4Diagram.setImageResource(quizModelArrayList.get(currentPos).getOption4Diagram());
+
+    }
+
+    private void answerView(int answer, int backgroundColor){
+        switch (answer){
+            case 1:
+                opt1Btn.setCardBackgroundColor(backgroundColor);
+                break;
+            case 2:
+                opt2Btn.setCardBackgroundColor(backgroundColor);
+                break;
+            case 3:
+                opt3Btn.setCardBackgroundColor(backgroundColor);
+                break;
+            case 4:
+                opt4Btn.setCardBackgroundColor(backgroundColor);
+                break;
+        }
+    }
+
+    private void defaultOptionView(){
+        ArrayList<CardView> options = new ArrayList<>();
+        options.add(0, opt1Btn);
+        options.add(1, opt2Btn);
+        options.add(2, opt3Btn);
+        options.add(3, opt4Btn);
+
+        for (CardView option : options){
+            option.setCardBackgroundColor(Color.WHITE);
+        }
+    }
+
+    private void selectedOptionView(CardView optionBtn, int selectedOptionNum){
+        mSelectedOptionPosition = selectedOptionNum;
+
+        defaultOptionView();
+        optionBtn.setCardBackgroundColor(Color.parseColor("#FEE741"));
+
     }
 }

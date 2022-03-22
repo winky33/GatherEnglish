@@ -7,6 +7,7 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -463,7 +464,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void getListeningQuestions(ArrayList<ListeningQuizModel> quizModelArrayList) {
         SQLiteDatabase DB = this.getReadableDatabase();
-
         ArrayList<Integer> audioList = new ArrayList<>();
         ArrayList<Integer> diagramList = new ArrayList<>();
         ArrayList<String> titleList = new ArrayList<>();
@@ -501,9 +501,27 @@ public class DBHelper extends SQLiteOpenHelper {
         int opt3 = indexList.get(2);
         int opt4 = indexList.get(3);
 
-        quizModelArrayList.add(new ListeningQuizModel(audioList.get(quesAudio), titleList.get(opt1), diagramList.get(opt1),
-                titleList.get(opt2), diagramList.get(opt2), titleList.get(opt3), diagramList.get(opt3), titleList.get(opt4),
-                diagramList.get(opt4), titleList.get(quesAudio)));
+        int answer = 0;
+        for (int i = 0; i < 4; i++){
+            int opt = indexList.get(i);
+            if (quesAudio == opt){
+                answer = i+1;
+            }
+        }
+
+        boolean contains = false;
+        for(ListeningQuizModel a : quizModelArrayList){
+            if (a.getQuestionAudio() == audioList.get(quesAudio)){
+                contains = true;
+            }
+        }
+
+        if (contains == false){
+            quizModelArrayList.add(new ListeningQuizModel(audioList.get(quesAudio), titleList.get(opt1), diagramList.get(opt1),
+                    titleList.get(opt2), diagramList.get(opt2), titleList.get(opt3), diagramList.get(opt3), titleList.get(opt4),
+                    diagramList.get(opt4), answer));
+        }
+
     }
 }
 

@@ -48,5 +48,5 @@
     <string name="listening_desc">Listening</string>
     <string name="question_desc">Question X</string>
     <string name="audio_button">Audio Button</string>
-    <string name="continue_btn">Continue</string>
+    <string name="submit_btn">Submit</string>
 </resources>
