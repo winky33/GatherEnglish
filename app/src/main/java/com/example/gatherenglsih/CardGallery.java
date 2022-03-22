@@ -44,8 +44,8 @@ public class CardGallery extends AppCompatActivity {
         String uuid = sharedPrefs.getString(PREF_UNIQUE_ID, null);
 
         //set coin amount
-        String coin = String.valueOf(db.getCoinAmount(uuid));
-        coinAmount.setText(coin);
+        int coin = db.getCoinAmount(uuid);
+        coinAmount.setText(String.valueOf(coin));
 
         exitBtn.setOnClickListener(view -> startActivity(new Intent(CardGallery.this, Homepage.class)));
 
@@ -55,8 +55,12 @@ public class CardGallery extends AppCompatActivity {
 
         gridView.setOnItemClickListener((adapterView, view, i, l) -> {
             int selectedImage = images.get(i);
+            Intent intent = new Intent(CardGallery.this, CardView.class);
+            intent.putExtra("diagram", selectedImage);
+            intent.putExtra("coinAmount", coin);
+            intent.putExtra("userID", uuid);
 
-            startActivity(new Intent(CardGallery.this, CardView.class).putExtra("diagram", selectedImage).putExtra("coinAmount", coin));
+            startActivity(intent);
         });
     }
 

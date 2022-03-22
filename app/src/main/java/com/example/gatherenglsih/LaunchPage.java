@@ -95,7 +95,7 @@ public class LaunchPage extends AppCompatActivity {
                     String nameTXT = name.getText().toString();
                     String currentTime = Calendar.getInstance().getTime().toString();
 
-                    boolean addNew = db.addNewUser(uuid, nameTXT, currentTime, 0);
+                    boolean addNew = db.addNewUser(uuid, nameTXT, currentTime);
 
                     if (addNew == true){
                         startActivity(new Intent(LaunchPage.this, Homepage.class));

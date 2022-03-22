@@ -3,6 +3,7 @@ package com.example.gatherenglsih;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -11,7 +12,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -23,7 +23,7 @@ public class ListeningExercise extends AppCompatActivity {
     private TextView questionNumber, opt1Txt, opt2Txt, opt3Txt, opt4Txt;
     private ImageButton audioBtn;
     private CardView opt1Btn, opt2Btn, opt3Btn, opt4Btn;
-    private ImageView opt1Diagram, opt2Diagram, opt3Diagram, opt4Diagram;
+    private ImageView exitBtn, opt1Diagram, opt2Diagram, opt3Diagram, opt4Diagram;
     private Button submitBtn;
 
     //vars
@@ -37,6 +37,7 @@ public class ListeningExercise extends AppCompatActivity {
 
         questionNumber = findViewById(R.id.listening_ques_no);
         audioBtn = findViewById(R.id.listening_audio_btn);
+        exitBtn = findViewById(R.id.listening_ExitBtn);
         opt1Btn = findViewById(R.id.listening_opt1);
         opt2Btn = findViewById(R.id.listening_opt2);
         opt3Btn = findViewById(R.id.listening_opt3);
@@ -51,6 +52,8 @@ public class ListeningExercise extends AppCompatActivity {
         opt4Txt = findViewById(R.id.listening_opt4_title);
         submitBtn = findViewById(R.id.listening_submit_button);
         quizModelArrayList = new ArrayList<>();
+
+        exitBtn.setOnClickListener(view -> startActivity(new Intent(ListeningExercise.this, CardGallery.class)));
 
         //generate 5 questions
         while (quizModelArrayList.size()< 5){
@@ -80,9 +83,11 @@ public class ListeningExercise extends AppCompatActivity {
                 if (currentPos <= quizModelArrayList.size()){
                     setDataToViews(currentPos-1);
                 }else{
-                    Toast completeToast = Toast.makeText(ListeningExercise.this, "You have successfully completed the Quiz",
-                            Toast.LENGTH_SHORT);
-                    completeToast.show();
+                    Intent intent = new Intent(ListeningExercise.this, ResultPage.class);
+                    intent.putExtra("ExerciseType", "Listening");
+                    intent.putExtra("CorrectAnswer", currentScore);
+                    intent.putExtra("Total Question", quizModelArrayList.size());
+                    startActivity(intent);
                 }
             }else{
                 if(quizModelArrayList.get(currentPos-1).getAnswer() != mSelectedOptionPosition){

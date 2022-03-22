@@ -79,12 +79,12 @@ public class DBHelper extends SQLiteOpenHelper {
 
         int[] diagramArray = {R.drawable.sofa1, R.drawable.sofa, R.drawable.lamp, R.drawable.lamp1, R.drawable.table1,
                 R.drawable.table, R.drawable.chair, R.drawable.chair1, R.drawable.bed, R.drawable.bed1, R.drawable.clock,
-                R.drawable.clock1, R.drawable.door, R.drawable.door1};
+                R.drawable.clock1, R.drawable.door, R.drawable.door1, R.drawable.tv, R.drawable.tv1};
         String[] nameArray = res.getStringArray(R.array.card_name);
         String[] typeArray = res.getStringArray(R.array.card_type);
         String[] catArray = res.getStringArray(R.array.card_category);
         int[] audioArray = {R.raw.sofa, R.raw.sofa, R.raw.lamp, R.raw.lamp, R.raw.table, R.raw.table, R.raw.chair,
-                R.raw.chair, R.raw.bed, R.raw.bed, R.raw.clock, R.raw.clock, R.raw.door, R.raw.door};
+                R.raw.chair, R.raw.bed, R.raw.bed, R.raw.clock, R.raw.clock, R.raw.door, R.raw.door, R.raw.tv, R.raw.tv};
 
         for (int i = 0; i < nameArray.length; i++) {
             values.put(KEY_CARD_TITLE, nameArray[i]);
@@ -94,7 +94,6 @@ public class DBHelper extends SQLiteOpenHelper {
             values.put(KEY_CARD_AUDIO, audioArray[i]);
             DB.insert(TABLE_FLASHCARD, null, values);
         }
-
     }
 
     @Override
@@ -104,18 +103,17 @@ public class DBHelper extends SQLiteOpenHelper {
         DB.execSQL("DROP TABLE IF EXISTS '" + TABLE_USERCARD + "'");
         DB.execSQL("DROP TABLE IF EXISTS '" + TABLE_EXERCISE + "'");
         onCreate(DB);
-
     }
 
     // User Table Functions
-    public boolean addNewUser(String userID, String UserName, String RegisterDate, int CoinAmount) {
+    public boolean addNewUser(String userID, String UserName, String RegisterDate) {
         SQLiteDatabase DB = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
         values.put(KEY_USER_ID, userID);
         values.put(KEY_USERNAME, UserName);
         values.put(KEY_REGISTER_DATE, RegisterDate);
-        values.put(KEY_COIN_AMOUNT, CoinAmount);
+        values.put(KEY_COIN_AMOUNT, 5);
 
         long result = DB.insert(TABLE_USER, null, values);
 
@@ -139,7 +137,6 @@ public class DBHelper extends SQLiteOpenHelper {
         } else {
             return false;
         }
-
     }
 
     public boolean getUserID(String userID) {
@@ -521,7 +518,21 @@ public class DBHelper extends SQLiteOpenHelper {
                     titleList.get(opt2), diagramList.get(opt2), titleList.get(opt3), diagramList.get(opt3), titleList.get(opt4),
                     diagramList.get(opt4), answer));
         }
+    }
 
+    // Exercise Table Functions
+    public boolean addNewExercise(String exerciseType, String Date, int correctQues, int totalQues) {
+        SQLiteDatabase DB = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(KEY_EXERCISE_TYPE, exerciseType);
+        values.put(KEY_EXERCISE_DATE, Date);
+        values.put(KEY_NO_CORRECT_ANSWER, correctQues);
+        values.put(KEY_NO_TOTAL_QUESTION, totalQues);
+
+        long result = DB.insert(TABLE_EXERCISE, null, values);
+
+        return result != -1;
     }
 }
 

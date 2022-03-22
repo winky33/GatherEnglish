@@ -2,6 +2,8 @@ package com.example.gatherenglsih;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -22,8 +24,10 @@ public class CardView extends AppCompatActivity {
     TextView coinTxt, cardTitleTxt;
 
     //vars
+    public int coinAmount;
     public int selectedImage;
     public int currentCardId;
+    public String uuid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +48,10 @@ public class CardView extends AppCompatActivity {
 
         if (intent.getExtras() != null){
             selectedImage = intent.getIntExtra("diagram",0);
-            String coinAmount = intent.getStringExtra("coinAmount");
+            coinAmount = intent.getIntExtra("coinAmount",0);
+            uuid = intent.getStringExtra("userID");
 
-            coinTxt.setText(coinAmount);
+            coinTxt.setText(String.valueOf(coinAmount));
             cardDiagram.setImageResource(selectedImage);
         }
         int cardID = db.getCardIDbyDiagram(String.valueOf(selectedImage));
@@ -69,15 +74,31 @@ public class CardView extends AppCompatActivity {
                 upgradeCard.setVisibility(View.VISIBLE);
 
                 upgradeCard.setOnClickListener(view -> {
-                    String currentTime = Calendar.getInstance().getTime().toString();
+                    if (coinAmount >= 5){
+                        String currentTime = Calendar.getInstance().getTime().toString();
+                        coinAmount = coinAmount- 5;
 
-                    boolean upgrade = db.storeUpgradeCard(cardID, currentTime);
-                    if (upgrade){
-                        upgradeCard.setVisibility(View.GONE);
-                        cardDiagram.setImageResource(db.getDiagram(cardID+1));
+                        db.updateCoinAmount(uuid, coinAmount);
+
+                        boolean upgrade = db.storeUpgradeCard(cardID, currentTime);
+                        if (upgrade){
+                            upgradeCard.setVisibility(View.GONE);
+                            cardDiagram.setImageResource(db.getDiagram(cardID+1));
+                            coinTxt.setText(String.valueOf(coinAmount));
+                        }else{
+                            Toast errorToast = Toast.makeText(CardView.this, "Error", Toast.LENGTH_SHORT);
+                            errorToast.show();
+                        }
                     }else{
-                        Toast errorToast = Toast.makeText(CardView.this, "Error", Toast.LENGTH_SHORT);
-                        errorToast.show();
+                        new AlertDialog.Builder(CardView.this)
+                                .setTitle("Alert")
+                                .setMessage("Coin Amount Insufficient, Please collect it by completing Exercises.")
+                                .setCancelable(true).setPositiveButton("Go to Exercise", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                startActivity(new Intent(CardView.this,Exercises.class));
+                            }
+                        }).show();
                     }
                 });
             } else {

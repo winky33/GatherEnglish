@@ -49,4 +49,8 @@
     <string name="question_desc">Question X</string>
     <string name="audio_button">Audio Button</string>
     <string name="submit_btn">Submit</string>
+    <string name="result_title">Result</string>
+    <string name="result_trophy_image">trophyImage</string>
+    <string name="result_congrat_txt">Hey, Congratulations!</string>
+    <string name="result_finish_btn">FINISH</string>
 </resources>

@@ -14,7 +14,7 @@
         android:layout_marginTop="10dp">
 
         <ImageView
-            android:id="@+id/cardViewExitBtn"
+            android:id="@+id/listening_ExitBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="0dp"
-            android:layout_toEndOf="@+id/cardViewExitBtn"
+            android:layout_toEndOf="@+id/listening_ExitBtn"
             android:text="@string/listening_desc"
             android:textSize="20sp"
             android:textStyle="bold" />
