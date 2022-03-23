@@ -53,4 +53,7 @@
     <string name="result_trophy_image">trophyImage</string>
     <string name="result_congrat_txt">Hey, Congratulations!</string>
     <string name="result_finish_btn">FINISH</string>
+    <string name="letters">Letters</string>
+    <string name="spelling_exe_desc">Fill in the word of the given diagram.</string>
+    <string name="spelling_title">Spelling</string>
 </resources>
