@@ -61,7 +61,7 @@
 
         <TextView
             android:textAlignment="center"
-            android:id="@+id/textQuestion"
+            android:id="@+id/spellingTextQuestion"
             android:textColor="#332FA2"
             android:layout_marginTop="5dp"
             android:textSize="20sp"

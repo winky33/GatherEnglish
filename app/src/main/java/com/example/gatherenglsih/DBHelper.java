@@ -520,6 +520,26 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
+    public ArrayList<String> getSpellingQuestion() {
+        SQLiteDatabase DB = this.getWritableDatabase();
+        ArrayList<String> cardTitle = new ArrayList<>();
+
+        String sql = "SELECT * FROM " + TABLE_FLASHCARD + " INNER JOIN "
+                + TABLE_USERCARD + " ON " + TABLE_FLASHCARD + "." + KEY_CARD_ID + " = " + TABLE_USERCARD + "." + KEY_CARD_ID
+                + " WHERE " + KEY_CARD_TYPE + " = ? " + " ORDER BY RANDOM() LIMIT 5";
+        Cursor cursor = DB.rawQuery(sql, new String[]{"LV1"});
+
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                @SuppressLint("Range") String title = cursor.getString(cursor.getColumnIndex(KEY_CARD_TITLE));
+
+                cardTitle.add(title);
+            }
+            cursor.close();
+        }
+        return cardTitle;
+    }
+
     // Exercise Table Functions
     public boolean addNewExercise(String exerciseType, String Date, int correctQues, int totalQues) {
         SQLiteDatabase DB = this.getWritableDatabase();

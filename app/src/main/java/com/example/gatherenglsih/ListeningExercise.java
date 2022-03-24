@@ -98,8 +98,6 @@ public class ListeningExercise extends AppCompatActivity {
                     currentScore++;
                 }
 
-                Log.i("Submit Answer", "CorrectAns: "+quizModelArrayList.get(currentPos-1).getAnswer()+ "Submit: "+mSelectedOptionPosition);
-
                 if (currentPos == quizModelArrayList.size()){
                     submitBtn.setText("FINISH");
                 }else{
