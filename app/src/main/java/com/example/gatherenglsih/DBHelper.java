@@ -124,19 +124,24 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase DB = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put(KEY_COIN_AMOUNT, CoinAmount);
-
-        String sql = "Select * from " + TABLE_USER + " where " + KEY_USER_ID + "= ?";
+        String sql = "SELECT * FROM " + TABLE_USER + " WHERE " + KEY_USER_ID + "= ?";
         Cursor cursor = DB.rawQuery(sql, new String[]{userID});
-        if (cursor.getCount() > 0) {
+        Log.i("updateCoin", "updateCoinAmount: "+cursor);
+        if (cursor!= null) {
+            if (cursor.moveToFirst()){
+                @SuppressLint("Range") int currentCoinAmount = cursor.getInt(cursor.getColumnIndex(KEY_COIN_AMOUNT));
+                cursor.close();
+                int totalCoin = currentCoinAmount + CoinAmount;
 
-            cursor.close();
-            long result = DB.update(TABLE_USER, values, KEY_USER_ID + "= ?", new String[]{userID});
+                values.put(KEY_COIN_AMOUNT, totalCoin);
+                long result = DB.update(TABLE_USER, values, KEY_USER_ID + "= ?", new String[]{userID});
 
-            return result != -1;
+                return result != -1;
+            }
         } else {
             return false;
         }
+        return false;
     }
 
     public boolean getUserID(String userID) {

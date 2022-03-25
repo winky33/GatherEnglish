@@ -1,28 +1,23 @@
 package com.example.gatherenglsih;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.content.res.AppCompatResources;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class SpellingExercise extends AppCompatActivity {
     DBHelper db = new DBHelper(SpellingExercise.this);
-    Random random = new Random();
 
     //widgets
     ImageView exitBtn, questionDiagram;
@@ -34,8 +29,6 @@ public class SpellingExercise extends AppCompatActivity {
     ArrayList<String> questions = new ArrayList<>();
     private char[] keys;
     private String textAnswer;
-    private String abc = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,24 +55,14 @@ public class SpellingExercise extends AppCompatActivity {
 
         questionTxt.setText(questionText);
         questionDiagram.setImageResource(diagram);
-        char randomLetter1 = abc.charAt(random.nextInt(abc.length()));
-        char randomLetter2 = abc.charAt(random.nextInt(abc.length()));
 
         textAnswer = question.toUpperCase();
-        int i = 0;
-        while (i < textAnswer.length()){
-            keys[i] = textAnswer.charAt(i);
-            i++;
-        }
-        keys[i + 1] = randomLetter1;
-        keys[i + 1] = randomLetter2;
-
-        //keys = textAnswer.toCharArray();
+        keys = textAnswer.toCharArray();
 
         shuffleArray(keys);
 
         for (char key : keys) {
-            addView(((LinearLayout) findViewById(R.id.spellingLayoutParent)), String.valueOf(key), ((EditText) findViewById(R.id.spellingEditText)));
+            addView(((LinearLayout) findViewById(R.id.spellingSelectionLayoutParent)), String.valueOf(key), ((EditText) findViewById(R.id.spellingEditText)));
         }
 
         maxPresCounter = keys.length;
@@ -119,30 +102,31 @@ public class SpellingExercise extends AppCompatActivity {
 
         textView.setOnClickListener(v -> {
             if(presCounter < maxPresCounter) {
-                if (presCounter == 0)
+                if (presCounter == 0){
                     editText.setText("");
+                }
 
-                    editText.setText(editText.getText().toString() + text);
-                    textView.startAnimation(smallbigforth);
-                    textView.animate().alpha(0).setDuration(300);
-                    textView.setClickable(false);
+                editText.setText(editText.getText().toString() + text);
+                textView.startAnimation(smallbigforth);
+                textView.animate().alpha(0).setDuration(300);
+                textView.setClickable(false);
 
-                    presCounter++;
+                presCounter++;
 
-                if (presCounter == maxPresCounter)
+                if (presCounter == maxPresCounter){
                     doValidate();
+                }
             }
         });
 
         viewParent.addView(textView);
     }
 
-
     private void doValidate() {
         presCounter = 0;
 
         EditText editText = findViewById(R.id.spellingEditText);
-        LinearLayout linearLayout = findViewById(R.id.spellingLayoutParent);
+        LinearLayout linearLayout = findViewById(R.id.spellingSelectionLayoutParent);
 
         if(editText.getText().toString().equals(textAnswer)) {
 //            Toast.makeText(MainActivity.this, "Correct", Toast.LENGTH_SHORT).show();
@@ -160,7 +144,17 @@ public class SpellingExercise extends AppCompatActivity {
             }
 
         } else {
-            Toast.makeText(SpellingExercise.this, "Wrong", Toast.LENGTH_SHORT).show();
+            currentPos ++;
+            if (currentPos <= questions.size()){
+                generateQuestion(currentPos - 1);
+
+            }else{
+                Intent intent = new Intent(SpellingExercise.this,ResultPage.class);
+                intent.putExtra("ExerciseType","Spelling");
+                intent.putExtra("CorrectAnswer", currentScore);
+                intent.putExtra("Total Question", questions.size());
+                startActivity(intent);
+            }
         }
         editText.setText("");
 
@@ -169,6 +163,6 @@ public class SpellingExercise extends AppCompatActivity {
         for (char key : keys) {
             addView(linearLayout, String.valueOf(key), editText);
         }
-
     }
 }
+
