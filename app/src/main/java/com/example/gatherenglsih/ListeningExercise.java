@@ -53,7 +53,7 @@ public class ListeningExercise extends AppCompatActivity {
         submitBtn = findViewById(R.id.listening_submit_button);
         quizModelArrayList = new ArrayList<>();
 
-        exitBtn.setOnClickListener(view -> startActivity(new Intent(ListeningExercise.this, CardGallery.class)));
+        exitBtn.setOnClickListener(view -> startActivity(new Intent(ListeningExercise.this, Homepage.class)));
 
         //generate 5 questions
         while (quizModelArrayList.size()< 5){
@@ -67,6 +67,7 @@ public class ListeningExercise extends AppCompatActivity {
             final MediaPlayer cardAudio = MediaPlayer.create(ListeningExercise.this, audio);
             cardAudio.start();
         });
+        audioBtn.performClick();
 
         opt1Btn.setOnClickListener(view -> selectedOptionView(opt1Btn, 1));
 

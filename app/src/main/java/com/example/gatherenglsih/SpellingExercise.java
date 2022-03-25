@@ -22,6 +22,7 @@ import java.util.Random;
 
 public class SpellingExercise extends AppCompatActivity {
     DBHelper db = new DBHelper(SpellingExercise.this);
+    Random random = new Random();
 
     //widgets
     ImageView exitBtn, questionDiagram;
@@ -33,6 +34,8 @@ public class SpellingExercise extends AppCompatActivity {
     ArrayList<String> questions = new ArrayList<>();
     private char[] keys;
     private String textAnswer;
+    private String abc = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +49,7 @@ public class SpellingExercise extends AppCompatActivity {
 
         questions = db.getSpellingQuestion();
 
-        exitBtn.setOnClickListener(view -> startActivity(new Intent(SpellingExercise.this, CardGallery.class)));
+        exitBtn.setOnClickListener(view -> startActivity(new Intent(SpellingExercise.this, Homepage.class)));
 
         generateQuestion(currentPos-1);
 
@@ -59,9 +62,19 @@ public class SpellingExercise extends AppCompatActivity {
 
         questionTxt.setText(questionText);
         questionDiagram.setImageResource(diagram);
+        char randomLetter1 = abc.charAt(random.nextInt(abc.length()));
+        char randomLetter2 = abc.charAt(random.nextInt(abc.length()));
 
         textAnswer = question.toUpperCase();
-        keys = textAnswer.toCharArray();
+        int i = 0;
+        while (i < textAnswer.length()){
+            keys[i] = textAnswer.charAt(i);
+            i++;
+        }
+        keys[i + 1] = randomLetter1;
+        keys[i + 1] = randomLetter2;
+
+        //keys = textAnswer.toCharArray();
 
         shuffleArray(keys);
 

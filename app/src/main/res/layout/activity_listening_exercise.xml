@@ -265,6 +265,7 @@
         android:layout_height="55dp"
         android:layout_gravity="center"
         android:textSize="18sp"
+        android:background="@drawable/bgbtn"
         android:text="@string/submit_btn"/>
 
 </LinearLayout>

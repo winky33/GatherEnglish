@@ -57,7 +57,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginBottom="70dp">
+        android:layout_marginBottom="30dp">
 
         <TextView
             android:textAlignment="center"
@@ -97,6 +97,7 @@
             android:textColor="#332FA2"
             android:textSize="32sp"
             tools:ignore="LabelFor,SpeakableTextPresentCheck" />
+
     </LinearLayout>
 
     <TextView
@@ -119,7 +120,16 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
     </LinearLayout>
+
+    <Button
+        android:id="@+id/listening_submit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="80dp"
+        android:textSize="18sp"
+        android:background="@drawable/bgbtn"
+        android:text="@string/submit_btn"/>
 
 </LinearLayout>
