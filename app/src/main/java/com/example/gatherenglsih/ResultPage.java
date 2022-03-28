@@ -51,7 +51,10 @@ public class ResultPage extends AppCompatActivity {
             scoreTV.setText("Your Score is "+score+" out of "+totalQues);
             coinTV.setText(score+" Coins Collected");
 
-            db.updateCoinAmount(uuid, score);
+            int currentCoins = db.getCoinAmount(uuid);
+            int totalCoins = currentCoins + score;
+
+            db.updateCoinAmount(uuid, totalCoins);
 
             db.addNewExercise(exeType, currentTime, score, totalQues);
         }

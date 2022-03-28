@@ -263,7 +263,7 @@
         android:id="@+id/listening_submit_button"
         android:layout_width="wrap_content"
         android:layout_height="55dp"
-        android:layout_gravity="center"
+        android:layout_gravity="center|bottom"
         android:textSize="18sp"
         android:background="@drawable/bgbtn"
         android:text="@string/submit_btn"/>

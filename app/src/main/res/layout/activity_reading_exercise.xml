@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/ic_bg"
-    tools:context=".SpellingExercise">
+    tools:context=".ReadingExercise"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/spelling_top_panel"
@@ -16,7 +15,7 @@
         android:layout_marginTop="10dp">
 
         <ImageView
-            android:id="@+id/spelling_ExitBtn"
+            android:id="@+id/reading_ExitBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
@@ -26,15 +25,14 @@
             app:srcCompat="@drawable/ic_baseline_arrow_back_ios_24" />
 
         <TextView
-            android:id="@+id/spellingTitle"
+            android:id="@+id/readingTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="0dp"
-            android:layout_toEndOf="@+id/spelling_ExitBtn"
-            android:text="@string/spelling_title"
+            android:layout_toEndOf="@+id/reading_ExitBtn"
+            android:text="@string/reading_title"
             android:textSize="20sp"
             android:textStyle="bold" />
-
     </RelativeLayout>
 
     <TextView
@@ -45,7 +43,7 @@
         android:textSize="22sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/spelling_exe_desc" />
+        android:text="Read into microphone the word given" />
 
     <LinearLayout
         android:layout_gravity="center"
@@ -61,7 +59,7 @@
 
         <TextView
             android:textAlignment="center"
-            android:id="@+id/spellingQuestionNo"
+            android:id="@+id/readingQuestionNo"
             android:textColor="#332FA2"
             android:layout_marginTop="5dp"
             android:textSize="20sp"
@@ -71,52 +69,55 @@
             android:text="@string/question_desc" />
 
         <ImageView
-            android:id="@+id/spelling_ques_diagram"
-            android:layout_width="150dp"
-            android:layout_height="200dp"
+            android:id="@+id/reading_ques_diagram"
+            android:layout_width="180dp"
+            android:layout_height="220dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
             android:contentDescription="@string/card_diagram_description"
             android:scaleType="fitXY"
             android:src="@drawable/chair" />
 
-        <EditText
-            android:id="@+id/spellingEditText"
-            android:layout_width="200dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="50dp"
-            android:background="@drawable/bgpurple"
-            android:clickable="false"
-            android:focusable="false"
-            android:gravity="center"
-            android:importantForAutofill="no"
-            android:inputType="text"
-            android:padding="10dp"
-            android:textColor="#332FA2"
-            android:textSize="32sp"/>
+        <TextView
+            android:id="@+id/reading_ques_word"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="chair"
+            android:textAllCaps="true"
+            android:layout_marginBottom="30dp"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"/>
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/reading_mic_button"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/ic_baseline_mic_24"
+        android:layout_gravity="center"
+        app:tint="@color/black" />
 
     <TextView
-        android:id="@+id/spellingLettersTitle"
-        android:text="@string/letters"
-        android:textSize="24sp"
-        android:textColor="#FFF"
-        android:layout_marginRight="28dp"
-        android:layout_marginLeft="28dp"
-        android:layout_width="match_parent"
+        android:id="@+id/testing"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        />
+        android:text="chair"
+        android:textAllCaps="true"
+        android:layout_marginBottom="30dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_gravity="center"/>
 
-    <LinearLayout
-        android:id="@+id/spellingSelectionLayoutParent"
-        android:layout_marginLeft="24dp"
-        android:layout_marginRight="24dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-    </LinearLayout>
+    <Button
+        android:id="@+id/reading_submit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+        android:layout_gravity="center|bottom"
+        android:textSize="18sp"
+        android:background="@drawable/bgbtn"
+        android:text="@string/submit_btn"/>
+
 
 </LinearLayout>

@@ -11,4 +11,5 @@
     <color name="home_background">#c4d3fb</color>
     <color name="home_button">#2d85c4</color>
     <color name="testing">#00000000</color>
+    <color name="mic_enabled_color">#0E87E7</color>
 </resources>

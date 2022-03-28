@@ -56,4 +56,5 @@
     <string name="letters">Letters</string>
     <string name="spelling_exe_desc">Fill in the word of the given diagram.</string>
     <string name="spelling_title">Spelling</string>
+    <string name="reading_title">Reading</string>
 </resources>

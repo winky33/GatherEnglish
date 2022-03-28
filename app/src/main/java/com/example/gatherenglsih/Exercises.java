@@ -29,9 +29,7 @@ public class Exercises extends AppCompatActivity {
 
         listeningBtn.setOnClickListener(view -> startActivity(new Intent(Exercises.this, ListeningExercise.class)));
 
-        readingBtn.setOnClickListener(view -> {
-            //startActivity(new Intent(Exercises.this, ReadingExercise.class));
-        });
+        readingBtn.setOnClickListener(view -> startActivity(new Intent(Exercises.this, ReadingExercise.class)));
 
     }
 }

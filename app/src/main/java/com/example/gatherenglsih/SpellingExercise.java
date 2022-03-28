@@ -38,9 +38,9 @@ public class SpellingExercise extends AppCompatActivity {
         smallbigforth = AnimationUtils.loadAnimation(this, R.anim.smallbigforth);
         exitBtn = findViewById(R.id.spelling_ExitBtn);
         questionDiagram = findViewById(R.id.spelling_ques_diagram);
-        questionTxt = findViewById(R.id.spellingTextQuestion);
+        questionTxt = findViewById(R.id.spellingQuestionNo);
 
-        questions = db.getSpellingQuestion();
+        questions = db.getSpellingReadingQuestion();
 
         exitBtn.setOnClickListener(view -> startActivity(new Intent(SpellingExercise.this, Homepage.class)));
 
@@ -62,7 +62,7 @@ public class SpellingExercise extends AppCompatActivity {
         shuffleArray(keys);
 
         for (char key : keys) {
-            addView(((LinearLayout) findViewById(R.id.spellingSelectionLayoutParent)), String.valueOf(key), ((EditText) findViewById(R.id.spellingEditText)));
+            addView(findViewById(R.id.spellingSelectionLayoutParent), String.valueOf(key), findViewById(R.id.spellingEditText));
         }
 
         maxPresCounter = keys.length;
