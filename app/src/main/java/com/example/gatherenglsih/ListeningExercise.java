@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -14,10 +15,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 public class ListeningExercise extends AppCompatActivity {
     DBHelper db = new DBHelper(ListeningExercise.this);
+    TextToSpeech textToSpeech;
 
     //widgets
     private TextView questionNumber, opt1Txt, opt2Txt, opt3Txt, opt4Txt;
@@ -62,10 +65,19 @@ public class ListeningExercise extends AppCompatActivity {
 
         setDataToViews(currentPos-1);
 
+        textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                if(i!=TextToSpeech.ERROR){//if no error found
+                    // To Choose language of speech
+                    textToSpeech.setLanguage(Locale.US);
+                }
+            }
+        });
+
         audioBtn.setOnClickListener(view -> {
-            int audio = quizModelArrayList.get(currentPos-1).getQuestionAudio();
-            final MediaPlayer cardAudio = MediaPlayer.create(ListeningExercise.this, audio);
-            cardAudio.start();
+            String audio = quizModelArrayList.get(currentPos-1).getQuestionTitle();
+            textToSpeech.speak(audio, TextToSpeech.QUEUE_FLUSH,null);
         });
         audioBtn.performClick();
 

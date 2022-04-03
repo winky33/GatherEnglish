@@ -32,7 +32,7 @@ public class ReadingExercise extends AppCompatActivity {
     SpeechRecognizer speechRecognizer;
 
     //widgets
-    TextView quesNoTxt, quesWord,testing;
+    TextView quesNoTxt, quesWord;
     ImageView exitBtn, quesDiagram, micBtn;
     Button submitBtn;
 
@@ -52,7 +52,6 @@ public class ReadingExercise extends AppCompatActivity {
         quesWord = findViewById(R.id.reading_ques_word);
         quesDiagram = findViewById(R.id.reading_ques_diagram);
         micBtn = findViewById(R.id.reading_mic_button);
-        testing = findViewById(R.id.testing);
         submitBtn = findViewById(R.id.reading_submit_button);
 
         exitBtn.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +76,7 @@ public class ReadingExercise extends AppCompatActivity {
 
                 try {
                     startActivityForResult(intent, RESULT_SPEECH);
-                    testing.setText("");
+                    inputAnswer = "";
                 } catch (ActivityNotFoundException e) {
                     Toast.makeText(getApplicationContext(), "Your device doesn't support Speech to Text", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
@@ -101,7 +100,6 @@ public class ReadingExercise extends AppCompatActivity {
                 if(resultCode == RESULT_OK && data != null){
                     ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     inputAnswer = text.get(0);
-                    testing.setText(inputAnswer);
                 }
                 break;
         }

@@ -1,7 +1,7 @@
 package com.example.gatherenglsih;
 
 public class ListeningQuizModel {
-    private int questionAudio;
+    private String questionTitle;
     private String option1;
     private int option1Diagram;
     private String option2;
@@ -12,8 +12,8 @@ public class ListeningQuizModel {
     private int option4Diagram;
     private int answer;
 
-    public ListeningQuizModel(int questionAudio, String option1, int option1Diagram, String option2, int option2Diagram, String option3, int option3Diagram, String option4, int option4Diagram, int answer) {
-        this.questionAudio = questionAudio;
+    public ListeningQuizModel(String questionTitle, String option1, int option1Diagram, String option2, int option2Diagram, String option3, int option3Diagram, String option4, int option4Diagram, int answer) {
+        this.questionTitle = questionTitle;
         this.option1 = option1;
         this.option1Diagram = option1Diagram;
         this.option2 = option2;
@@ -25,12 +25,12 @@ public class ListeningQuizModel {
         this.answer = answer;
     }
 
-    public int getQuestionAudio() {
-        return questionAudio;
+    public String getQuestionTitle() {
+        return questionTitle;
     }
 
-    public void setQuestionAudio(int questionAudio) {
-        this.questionAudio = questionAudio;
+    public void setQuestionAudio(String questionTitle) {
+        this.questionTitle = questionTitle;
     }
 
     public String getOption1() {

@@ -7,8 +7,6 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,7 +34,6 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String KEY_CARD_TYPE = "cardType";
     private static final String KEY_CARD_CATEGORY = "cardCategory";
     private static final String KEY_CARD_DIAGRAM = "cardDiagram";
-    private static final String KEY_CARD_AUDIO = "cardAudio";
     private static final String KEY_CARD_OBTAINED_UPGRADED_DATE = "cardObtainUpgradeDate";
     private static final String KEY_CARD_STATUS = "cardStatus";
     private static final String KEY_EXERCISE_TYPE = "exerciseType";
@@ -50,7 +47,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_FLASHCARD = "CREATE TABLE "
             + TABLE_FLASHCARD + "(" + KEY_CARD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + KEY_CARD_TITLE + " TEXT," + KEY_CARD_TYPE + " TEXT," + KEY_CARD_CATEGORY + " TEXT,"
-            + KEY_CARD_DIAGRAM + " INTEGER," + KEY_CARD_AUDIO + " TEXT);";
+            + KEY_CARD_DIAGRAM + " INTEGER);";
     private static final String CREATE_TABLE_USERCARD = "CREATE TABLE "
             + TABLE_USERCARD + "(" + KEY_CARD_ID + " INTEGER PRIMARY KEY," + KEY_CARD_OBTAINED_UPGRADED_DATE + " TEXT,"
             + KEY_CARD_STATUS + " TEXT);";
@@ -79,19 +76,17 @@ public class DBHelper extends SQLiteOpenHelper {
 
         int[] diagramArray = {R.drawable.sofa1, R.drawable.sofa, R.drawable.lamp, R.drawable.lamp1, R.drawable.table1,
                 R.drawable.table, R.drawable.chair, R.drawable.chair1, R.drawable.bed, R.drawable.bed1, R.drawable.clock,
-                R.drawable.clock1, R.drawable.door, R.drawable.door1, R.drawable.tv, R.drawable.tv1};
+                R.drawable.clock1, R.drawable.door, R.drawable.door1, R.drawable.fan, R.drawable.fan1,R.drawable.stove,
+                R.drawable.stove1,R.drawable.mirror, R.drawable.mirror1,};
         String[] nameArray = res.getStringArray(R.array.card_name);
         String[] typeArray = res.getStringArray(R.array.card_type);
         String[] catArray = res.getStringArray(R.array.card_category);
-        int[] audioArray = {R.raw.sofa, R.raw.sofa, R.raw.lamp, R.raw.lamp, R.raw.table, R.raw.table, R.raw.chair,
-                R.raw.chair, R.raw.bed, R.raw.bed, R.raw.clock, R.raw.clock, R.raw.door, R.raw.door, R.raw.tv, R.raw.tv};
 
         for (int i = 0; i < nameArray.length; i++) {
             values.put(KEY_CARD_TITLE, nameArray[i]);
             values.put(KEY_CARD_TYPE, typeArray[i]);
             values.put(KEY_CARD_CATEGORY, catArray[i]);
             values.put(KEY_CARD_DIAGRAM, diagramArray[i]);
-            values.put(KEY_CARD_AUDIO, audioArray[i]);
             DB.insert(TABLE_FLASHCARD, null, values);
         }
     }
@@ -131,6 +126,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         if (cursor!= null) {
             long result = DB.update(TABLE_USER, values, KEY_USER_ID + "= ?", new String[]{userID});
+            cursor.close();
 
             return result != -1;
         }else{
@@ -236,24 +232,6 @@ public class DBHelper extends SQLiteOpenHelper {
         if (cursor != null) {
             if (cursor.moveToFirst()) {
                 @SuppressLint("Range") int diagram = cursor.getInt(cursor.getColumnIndex(KEY_CARD_DIAGRAM));
-                cursor.close();
-
-                return diagram;
-            }
-        }
-        return 0;
-    }
-
-    public int getCardAudio(int cardID) {
-        SQLiteDatabase DB = this.getReadableDatabase();
-
-        String sql = "Select " + KEY_CARD_AUDIO + " from " + TABLE_FLASHCARD + " WHERE " + KEY_CARD_ID
-                + " = ?";
-        Cursor cursor = DB.rawQuery(sql, new String[]{String.valueOf(cardID)});
-
-        if (cursor != null) {
-            if (cursor.moveToFirst()) {
-                @SuppressLint("Range") int diagram = cursor.getInt(cursor.getColumnIndex(KEY_CARD_AUDIO));
                 cursor.close();
 
                 return diagram;
@@ -460,7 +438,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void getListeningQuestions(ArrayList<ListeningQuizModel> quizModelArrayList) {
         SQLiteDatabase DB = this.getReadableDatabase();
-        ArrayList<Integer> audioList = new ArrayList<>();
         ArrayList<Integer> diagramList = new ArrayList<>();
         ArrayList<String> titleList = new ArrayList<>();
         ArrayList<Integer> indexList = new ArrayList<>();
@@ -473,11 +450,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
         if (cursor != null) {
             while (cursor.moveToNext()) {
-                @SuppressLint("Range") int audio = cursor.getInt(cursor.getColumnIndex(KEY_CARD_AUDIO));
                 @SuppressLint("Range") int diagram = cursor.getInt(cursor.getColumnIndex(KEY_CARD_DIAGRAM));
                 @SuppressLint("Range") String title = cursor.getString(cursor.getColumnIndex(KEY_CARD_TITLE));
 
-                audioList.add(audio);
                 diagramList.add(diagram);
                 titleList.add(title);
             }
@@ -491,7 +466,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         Collections.shuffle(indexList);
 
-        int quesAudio = indexList.get(random.nextInt(indexList.size()));
+        int quesTitle = indexList.get(random.nextInt(indexList.size()));
         int opt1 = indexList.get(0);
         int opt2 = indexList.get(1);
         int opt3 = indexList.get(2);
@@ -500,20 +475,21 @@ public class DBHelper extends SQLiteOpenHelper {
         int answer = 0;
         for (int i = 0; i < 4; i++){
             int opt = indexList.get(i);
-            if (quesAudio == opt){
+            if (quesTitle == opt){
                 answer = i+1;
             }
         }
 
         boolean contains = false;
         for(ListeningQuizModel a : quizModelArrayList){
-            if (a.getQuestionAudio() == audioList.get(quesAudio)){
+            if (a.getQuestionTitle().equals(titleList.get(quesTitle))) {
                 contains = true;
+                break;
             }
         }
 
-        if (contains == false){
-            quizModelArrayList.add(new ListeningQuizModel(audioList.get(quesAudio), titleList.get(opt1), diagramList.get(opt1),
+        if (!contains){
+            quizModelArrayList.add(new ListeningQuizModel(titleList.get(quesTitle), titleList.get(opt1), diagramList.get(opt1),
                     titleList.get(opt2), diagramList.get(opt2), titleList.get(opt3), diagramList.get(opt3), titleList.get(opt4),
                     diagramList.get(opt4), answer));
         }

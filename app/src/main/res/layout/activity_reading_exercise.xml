@@ -99,17 +99,6 @@
         android:layout_gravity="center"
         app:tint="@color/black" />
 
-    <TextView
-        android:id="@+id/testing"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="chair"
-        android:textAllCaps="true"
-        android:layout_marginBottom="30dp"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_gravity="center"/>
-
     <Button
         android:id="@+id/reading_submit_button"
         android:layout_width="wrap_content"

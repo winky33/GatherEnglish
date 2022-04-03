@@ -14,6 +14,7 @@ import android.media.ThumbnailUtils;
 
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.speech.tts.TextToSpeech;
 import android.view.Gravity;
 import android.view.View;
 
@@ -31,10 +32,12 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class GatherCard extends AppCompatActivity {
     DBHelper db = new DBHelper(GatherCard.this);
     private AlertDialog dialog;
+    TextToSpeech textToSpeech;
 
     //widgets
     TextView result, closeBtn;
@@ -65,6 +68,16 @@ public class GatherCard extends AppCompatActivity {
             } else{
                 //Request camera permission
                 requestPermissions(new String[]{Manifest.permission.CAMERA}, 100);
+            }
+        });
+
+        textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                if(i!=TextToSpeech.ERROR){//if no error found
+                    // To Choose language of speech
+                    textToSpeech.setLanguage(Locale.US);
+                }
             }
         });
     }
@@ -160,7 +173,6 @@ public class GatherCard extends AppCompatActivity {
             if (storeCard){
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
                 final View cardPopupView = getLayoutInflater().inflate(R.layout.gather_card_popup, null);
-                final MediaPlayer cardAudio = MediaPlayer.create(this, db.getCardAudio(cardID));
 
                 cardDiagramView = cardPopupView.findViewById(R.id.popup_obtained_card);
                 closeBtn = cardPopupView.findViewById(R.id.popup_close_btn);
@@ -169,7 +181,7 @@ public class GatherCard extends AppCompatActivity {
                 dialog = dialogBuilder.create();
                 dialog.show();
 
-                cardAudio.start();
+                textToSpeech.speak(imgClass,TextToSpeech.QUEUE_FLUSH,null);
 
                 cardDiagramView.setImageResource(diagram);
 

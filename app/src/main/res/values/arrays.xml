@@ -26,11 +26,19 @@
         <item>Clock</item>
         <item>Door</item>
         <item>Door</item>
-        <item>Television</item>
-        <item>Television</item>
+        <item>Fan</item>
+        <item>Fan</item>
+        <item>Stove</item>
+        <item>Stove</item>
+        <item>Mirror</item>
+        <item>Mirror</item>
     </string-array>
 
     <string-array name="card_type">
+        <item tools:ignore="Typos">LV1</item>
+        <item>LV2</item>
+        <item tools:ignore="Typos">LV1</item>
+        <item>LV2</item>
         <item tools:ignore="Typos">LV1</item>
         <item>LV2</item>
         <item tools:ignore="Typos">LV1</item>
@@ -64,6 +72,10 @@
         <item>Furnishing</item>
         <item>Fixture</item>
         <item>Fixture</item>
+        <item>Fixture</item>
+        <item>Fixture</item>
+        <item>Furniture</item>
+        <item>Furniture</item>
         <item>Furnishing</item>
         <item>Furnishing</item>
     </string-array>

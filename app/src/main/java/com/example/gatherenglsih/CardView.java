@@ -7,16 +7,21 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.util.Calendar;
+import java.util.Locale;
 
 public class CardView extends AppCompatActivity {
     DBHelper db = new DBHelper(CardView.this);
+    TextToSpeech textToSpeech;
 
     //widgets
     ImageView cardDiagram, exitBtn;
@@ -56,14 +61,23 @@ public class CardView extends AppCompatActivity {
         }
         int cardID = db.getCardIDbyDiagram(String.valueOf(selectedImage));
 
+        textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                if(i!=TextToSpeech.ERROR){//if no error found
+                    // To Choose language of speech
+                    textToSpeech.setLanguage(Locale.US);
+                }
+            }
+        });
+
         //Set Card Title
         String cardTitle = db.getCardTitle(cardID);
         cardTitleTxt.setText(cardTitle);
 
         //Play Audio Function
         playAudio.setOnClickListener(view -> {
-            final MediaPlayer cardAudio = MediaPlayer.create(this, db.getCardAudio(cardID));
-            cardAudio.start();
+            textToSpeech.speak(cardTitle,TextToSpeech.QUEUE_FLUSH,null);
         });
 
         //Upgrade Card Function
