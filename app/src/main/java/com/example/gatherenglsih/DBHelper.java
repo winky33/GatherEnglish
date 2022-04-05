@@ -258,6 +258,23 @@ public class DBHelper extends SQLiteOpenHelper {
         return 0;
     }
 
+    public int getTotalCardAmount(){
+        SQLiteDatabase DB = this.getReadableDatabase();
+
+        String sql = "Select " + KEY_CARD_ID + " from " + TABLE_FLASHCARD + " WHERE " + KEY_CARD_TYPE
+                + " = ?";
+        Cursor cursor = DB.rawQuery(sql, new String[]{"LV1"});
+
+        if (cursor != null){
+            int amount = cursor.getCount();
+            cursor.close();
+
+            return amount;
+        }
+
+        return 0;
+    }
+
     //userCard Table Functions
     public boolean storeObtainCard(int cardId, String obtUpgDate) {
         SQLiteDatabase DB = this.getWritableDatabase();
@@ -421,18 +438,40 @@ public class DBHelper extends SQLiteOpenHelper {
         return diagram;
     }
 
-    public boolean checkCardQty() {
+    public int getCollectedCardQty() {
         SQLiteDatabase DB = this.getReadableDatabase();
 
-        String checkSql = "Select * from " + TABLE_USERCARD;
-        Cursor check = DB.rawQuery(checkSql, null);
+        String checkSql = "SELECT " + KEY_CARD_DIAGRAM + " FROM " + TABLE_FLASHCARD + " INNER JOIN "
+                + TABLE_USERCARD + " ON " + TABLE_FLASHCARD + "." + KEY_CARD_ID + " = " + TABLE_USERCARD + "." + KEY_CARD_ID
+                + " WHERE " + KEY_CARD_TYPE + " = ?";
+        Cursor check = DB.rawQuery(checkSql, new String[]{"LV1"});
 
-        if (check.getCount() >= 5) {
+        if(check != null){
+            int qty = check.getCount();
             check.close();
-            return true;
-        } else {
-            return false;
+
+            return qty;
         }
+
+        return 0;
+    }
+
+    public int getUpgradedCardQty() {
+        SQLiteDatabase DB = this.getReadableDatabase();
+
+        String checkSql = "SELECT " + KEY_CARD_DIAGRAM + " FROM " + TABLE_FLASHCARD + " INNER JOIN "
+                + TABLE_USERCARD + " ON " + TABLE_FLASHCARD + "." + KEY_CARD_ID + " = " + TABLE_USERCARD + "." + KEY_CARD_ID
+                + " WHERE " + KEY_CARD_TYPE + " = ?";
+        Cursor check = DB.rawQuery(checkSql, new String[]{"LV2"});
+
+        if(check != null){
+            int qty = check.getCount();
+            check.close();
+
+            return qty;
+        }
+
+        return 0;
     }
 
 

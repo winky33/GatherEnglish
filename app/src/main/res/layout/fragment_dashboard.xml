@@ -23,8 +23,8 @@
             android:id="@+id/dashboardText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
             android:layout_centerInParent="true"
+            android:layout_marginStart="15dp"
             android:layout_toEndOf="@+id/imageView"
             android:gravity="center"
             android:text="@string/dashboard_text"
@@ -33,12 +33,81 @@
     </RelativeLayout>
 
 
-    <androidx.cardview.widget.CardView
+    <LinearLayout
         android:id="@+id/report_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="horizontal">
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    </androidx.cardview.widget.CardView>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/total_collect_layout">
+
+                    <ProgressBar
+                        android:id="@+id/total_collect_progress"
+                        android:layout_width="200dp"
+                        android:layout_height="200dp"
+                        android:progress="0"
+                        android:indeterminateOnly="false"
+                        android:progressDrawable="@drawable/progress_style"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/total_collect_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Flashcard \nCollected \n0/10"
+                        android:textAlignment="center"
+                        app:layout_constraintBottom_toBottomOf="@+id/total_collect_progress"
+                        app:layout_constraintEnd_toEndOf="@+id/total_collect_progress"
+                        app:layout_constraintStart_toStartOf="@+id/total_collect_progress"
+                        app:layout_constraintTop_toTopOf="@+id/total_collect_progress" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/total_upgrade_layout"
+                    android:layout_toEndOf="@+id/total_collect_layout">
+
+                    <ProgressBar
+                        android:id="@+id/total_upgrade_progress"
+                        android:layout_width="200dp"
+                        android:layout_height="200dp"
+                        tools:progress="0"
+                        android:indeterminateOnly="false"
+                        android:progressDrawable="@drawable/progress_style"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/total_upgrade_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Flashcard \nUpdated \n0/10"
+                        android:textAlignment="center"
+                        app:layout_constraintBottom_toBottomOf="@+id/total_upgrade_progress"
+                        app:layout_constraintEnd_toEndOf="@+id/total_upgrade_progress"
+                        app:layout_constraintStart_toStartOf="@+id/total_upgrade_progress"
+                        app:layout_constraintTop_toTopOf="@+id/total_upgrade_progress" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </RelativeLayout>
+        </ScrollView>
+    </LinearLayout>
 
 </LinearLayout>

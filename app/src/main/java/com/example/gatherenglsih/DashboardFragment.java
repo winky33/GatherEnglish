@@ -6,52 +6,24 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link DashboardFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class DashboardFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    //widgets
+    private ProgressBar totalCardCollect, totalCardUpgrade;
+    private TextView totalCardCollectTV, totalCardUpgradeTV;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public DashboardFragment() {
-        // Required empty public constructor
-    }
-
+    //vars
     private static String uuid;
     private static final String PREF_UNIQUE_ID = "PREF_UNIQUE_ID";
-
-    // TODO: Rename and change types and number of parameters
-    public static DashboardFragment newInstance(String param1, String param2) {
-        DashboardFragment fragment = new DashboardFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    private int noCollectedCard, noTotalCard, noUpgradeCard, i=0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,6 +41,25 @@ public class DashboardFragment extends Fragment {
         //set dashboard username
         TextView homeText = (TextView) rootView.findViewById(R.id.dashboardText);
         homeText.setText(db.getUserName(uuid));
+
+        //set total collected flashcard progress bar
+        totalCardCollect = rootView.findViewById(R.id.total_collect_progress);
+        totalCardCollectTV = rootView.findViewById(R.id.total_collect_tv);
+
+        noTotalCard = db.getTotalCardAmount();
+        noCollectedCard = db.getCollectedCardQty();
+
+
+        totalCardCollectTV.setText("Flashcard \nCollected \n"+noCollectedCard+"/"+noTotalCard);
+
+        while (i <= noCollectedCard) {
+            int currentProgress = 0;
+            currentProgress = currentProgress + i;
+            totalCardCollect.setProgress(currentProgress);
+            totalCardCollect.setMax(noTotalCard);
+            i++;
+        }
+
 
         return rootView;
     }

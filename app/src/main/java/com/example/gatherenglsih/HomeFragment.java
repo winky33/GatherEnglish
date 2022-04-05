@@ -48,9 +48,9 @@ public class HomeFragment extends Fragment {
         });
 
         exercise_btn.setOnClickListener(view -> {
-            boolean exerciseRequirement = db.checkCardQty();
+            int exerciseRequirement = db.getCollectedCardQty();
 
-            if (exerciseRequirement){
+            if (exerciseRequirement >= 5){
                 exercise_btn.setClickable(true);
                 Intent intent = new Intent(getActivity(), Exercises.class);
                 startActivity(intent);
