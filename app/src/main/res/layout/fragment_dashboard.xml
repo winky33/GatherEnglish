@@ -65,22 +65,37 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/total_collect_tv"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Flashcard \nCollected \n0/10"
-                        android:textAlignment="center"
+                        android:orientation="vertical"
                         app:layout_constraintBottom_toBottomOf="@+id/total_collect_progress"
                         app:layout_constraintEnd_toEndOf="@+id/total_collect_progress"
                         app:layout_constraintStart_toStartOf="@+id/total_collect_progress"
-                        app:layout_constraintTop_toTopOf="@+id/total_collect_progress" />
+                        app:layout_constraintTop_toTopOf="@+id/total_collect_progress" >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Flashcard \nCollected"
+                            android:textAlignment="center"
+                            android:textSize="20sp"
+                            />
+                        <TextView
+                            android:id="@+id/total_collect_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="0/10"
+                            android:textSize="20sp"/>
+                    </LinearLayout>
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/total_upgrade_layout"
+                    android:layout_marginStart="10dp"
                     android:layout_toEndOf="@+id/total_collect_layout">
 
                     <ProgressBar
@@ -95,16 +110,29 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/total_upgrade_tv"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Flashcard \nUpdated \n0/10"
-                        android:textAlignment="center"
+                        android:orientation="vertical"
                         app:layout_constraintBottom_toBottomOf="@+id/total_upgrade_progress"
                         app:layout_constraintEnd_toEndOf="@+id/total_upgrade_progress"
                         app:layout_constraintStart_toStartOf="@+id/total_upgrade_progress"
-                        app:layout_constraintTop_toTopOf="@+id/total_upgrade_progress" />
+                        app:layout_constraintTop_toTopOf="@+id/total_upgrade_progress" >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Flashcard \nUpdated"
+                            android:textAlignment="center"
+                            android:textSize="20sp"
+                            />
+                        <TextView
+                            android:id="@+id/total_upgrade_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="0/10"
+                            android:textSize="20sp"/>
+                    </LinearLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </RelativeLayout>
         </ScrollView>

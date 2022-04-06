@@ -42,25 +42,58 @@ public class DashboardFragment extends Fragment {
         TextView homeText = (TextView) rootView.findViewById(R.id.dashboardText);
         homeText.setText(db.getUserName(uuid));
 
-        //set total collected flashcard progress bar
+        //set total collected/upgraded flashcard progress bar
         totalCardCollect = rootView.findViewById(R.id.total_collect_progress);
         totalCardCollectTV = rootView.findViewById(R.id.total_collect_tv);
-
+        totalCardUpgrade = rootView.findViewById(R.id.total_upgrade_progress);
+        totalCardUpgradeTV = rootView.findViewById(R.id.total_upgrade_tv);
         noTotalCard = db.getTotalCardAmount();
+        noUpgradeCard = db.getUpgradedCardQty();
         noCollectedCard = db.getCollectedCardQty();
 
+        flashcardProgresses();
 
-        totalCardCollectTV.setText("Flashcard \nCollected \n"+noCollectedCard+"/"+noTotalCard);
-
-        while (i <= noCollectedCard) {
-            int currentProgress = 0;
-            currentProgress = currentProgress + i;
-            totalCardCollect.setProgress(currentProgress);
-            totalCardCollect.setMax(noTotalCard);
-            i++;
-        }
 
 
         return rootView;
     }
+
+    public void flashcardProgresses(){
+        final Handler collectedHandler = new Handler();
+        collectedHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // set the limitations for the numeric
+                // text under the progress bar
+                if (i <= noCollectedCard) {
+                    totalCardCollectTV.setText(i+"/"+noTotalCard);;
+                    totalCardCollect.setProgress(i);
+                    totalCardCollect.setMax(noTotalCard);
+                    i++;
+                    collectedHandler.postDelayed(this, 100);
+                } else {
+                    collectedHandler.removeCallbacks(this);
+                }
+            }
+        }, 100);
+
+        final Handler upgradedHandler = new Handler();
+        upgradedHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // set the limitations for the numeric
+                // text under the progress bar
+                if (i <= noUpgradeCard) {
+                    totalCardUpgradeTV.setText(i+"/"+noTotalCard);;
+                    totalCardUpgrade.setProgress(i);
+                    totalCardUpgrade.setMax(noTotalCard);
+                    i++;
+                    upgradedHandler.postDelayed(this, 100);
+                } else {
+                    upgradedHandler.removeCallbacks(this);
+                }
+            }
+        }, 100);
+    }
+
 }

@@ -4,12 +4,15 @@
         <shape
             android:innerRadiusRatio="2.5"
             android:shape="ring"
-            android:thickness="3dp"
+            android:thickness="8dp"
             android:useLevel="false">
             <solid android:color="#D2EDFC"/>
         </shape>
     </item>
     <item android:id="@android:id/progress">
+        <rotate
+            android:fromDegrees="270"
+            android:toDegrees="270">
             <shape
                 android:innerRadiusRatio="2.5"
                 android:shape="ring"
@@ -17,11 +20,13 @@
                 android:useLevel="true">
                 <gradient
                     android:angle="0"
-                    android:endColor="#7BACF3"
-                    android:startColor="#287CF6"
+                    android:startColor="#7BACF3"
+                    android:endColor="#287CF6"
                     android:type="sweep"
                     android:useLevel="false" />
             </shape>
+        </rotate>
+
 
     </item>
 </layer-list>
