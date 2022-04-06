@@ -33,9 +33,9 @@
             android:layout_marginBottom="0dp"
             android:layout_toEndOf="@+id/cardViewExitBtn"
             android:text="@string/gallery_desc"
+            android:textColor="@color/white"
             android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/white"/>
+            android:textStyle="bold" />
 
         <LinearLayout
             android:id="@+id/coin_frame"
