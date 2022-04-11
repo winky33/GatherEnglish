@@ -115,7 +115,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return result != -1;
     }
 
-    public boolean updateCoinAmount(String userID, int CoinAmount) {
+    public void updateCoinAmount(String userID, int CoinAmount) {
         SQLiteDatabase DB = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
@@ -127,10 +127,6 @@ public class DBHelper extends SQLiteOpenHelper {
         if (cursor!= null) {
             long result = DB.update(TABLE_USER, values, KEY_USER_ID + "= ?", new String[]{userID});
             cursor.close();
-
-            return result != -1;
-        }else{
-            return false;
         }
     }
 
@@ -567,6 +563,59 @@ public class DBHelper extends SQLiteOpenHelper {
         long result = DB.insert(TABLE_EXERCISE, null, values);
 
         return result != -1;
+    }
+
+    public int getTotalExerciseCount (String exeType){
+        SQLiteDatabase DB = this.getReadableDatabase();
+
+        String checkSql = "SELECT * FROM " + TABLE_EXERCISE + " WHERE " + KEY_EXERCISE_TYPE + " = ?";
+        Cursor check = DB.rawQuery(checkSql, new String[]{exeType});
+
+        if(check != null){
+            int qty = check.getCount();
+            check.close();
+
+            return qty;
+        }
+
+        return 0;
+    }
+
+    public ArrayList<Integer> getExerciseStat (String exeType){
+        SQLiteDatabase DB = this.getReadableDatabase();
+        ArrayList<Integer> exeStat = new ArrayList<>();
+
+        String checkSql = "SELECT * FROM " + TABLE_EXERCISE + " WHERE " + KEY_EXERCISE_TYPE + " = ?";
+        Cursor check = DB.rawQuery(checkSql, new String[]{exeType});
+
+        if(check != null){
+            int qty = check.getCount();
+            check.close();
+
+            exeStat.add(0,qty);
+        }
+
+        String totalCorAnsSql = "SELECT SUM("+ KEY_NO_CORRECT_ANSWER+") FROM " + TABLE_EXERCISE + " WHERE " + KEY_EXERCISE_TYPE + " = ?";
+        Cursor cursor = DB.rawQuery(totalCorAnsSql, new String[]{exeType});
+
+        if(cursor.moveToFirst()){
+            int totalCorAns = cursor.getInt(0);
+            cursor.close();
+
+            exeStat.add(1,totalCorAns);
+        }
+
+        String totalQuesSql = "SELECT SUM("+ KEY_NO_TOTAL_QUESTION+") FROM " + TABLE_EXERCISE + " WHERE " + KEY_EXERCISE_TYPE + " = ?";
+        Cursor c = DB.rawQuery(totalQuesSql, new String[]{exeType});
+
+        if(c.moveToFirst()){
+            int totalQues = c.getInt(0);
+            c.close();
+
+            exeStat.add(2,totalQues);
+        }
+
+        return exeStat;
     }
 }
 

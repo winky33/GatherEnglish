@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Winky33/AndroidStudioProjects/GatherEnglish/app/src/main/res/drawable/circle_button_style.xml" value="0.2351851851851852" />
+        <entry key="..\:/Users/Winky33/AndroidStudioProjects/GatherEnglish/app/src/main/res/drawable/ic_baseline_find_replace_24.xml" value="0.2351851851851852" />
         <entry key="..\:/Users/Winky33/AndroidStudioProjects/GatherEnglish/app/src/main/res/drawable/progress_style.xml" value="0.24166666666666667" />
+        <entry key="..\:/Users/Winky33/AndroidStudioProjects/GatherEnglish/app/src/main/res/drawable/report_circle_style.xml" value="0.2351851851851852" />
         <entry key="..\:/Users/Winky33/AndroidStudioProjects/GatherEnglish/app/src/main/res/layout/activity_card_gallery.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Winky33/AndroidStudioProjects/GatherEnglish/app/src/main/res/layout/activity_card_view.xml" value="0.264" />
         <entry key="..\:/Users/Winky33/AndroidStudioProjects/GatherEnglish/app/src/main/res/layout/activity_exercises.xml" value="0.23278985507246377" />
@@ -12,7 +15,7 @@
         <entry key="..\:/Users/Winky33/AndroidStudioProjects/GatherEnglish/app/src/main/res/layout/activity_reading_exercise.xml" value="0.23731884057971014" />
         <entry key="..\:/Users/Winky33/AndroidStudioProjects/GatherEnglish/app/src/main/res/layout/activity_result_page.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Winky33/AndroidStudioProjects/GatherEnglish/app/src/main/res/layout/activity_spelling_exercise.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/Winky33/AndroidStudioProjects/GatherEnglish/app/src/main/res/layout/fragment_dashboard.xml" value="0.2" />
+        <entry key="..\:/Users/Winky33/AndroidStudioProjects/GatherEnglish/app/src/main/res/layout/fragment_dashboard.xml" value="0.264" />
         <entry key="..\:/Users/Winky33/AndroidStudioProjects/GatherEnglish/app/src/main/res/layout/fragment_home.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Winky33/AndroidStudioProjects/GatherEnglish/app/src/main/res/layout/gather_card_popup.xml" value="0.264" />
         <entry key="..\:/Users/Winky33/AndroidStudioProjects/GatherEnglish/app/src/main/res/layout/row_items.xml" value="0.22916666666666666" />

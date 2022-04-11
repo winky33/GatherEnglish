@@ -58,4 +58,12 @@
     <string name="spelling_title">Spelling</string>
     <string name="reading_title">Reading</string>
     <string name="back_button">Back Button</string>
+    <string name="progress_report">Progress Report</string>
+    <string name="flashcard_collected">Flashcard \nCollected</string>
+    <string name="progression">0/10</string>
+    <string name="flashcard_updated">Flashcard \nUpdated</string>
+    <string name="stat_value">0</string>
+    <string name="exercise_completed">Exercise \nCompleted</string>
+    <string name="correct_answer">Correct \nAnswer</string>
+    <string name="total_question">Total \nQuestion</string>
 </resources>

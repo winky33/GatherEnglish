@@ -1,5 +1,6 @@
 package com.example.gatherenglsih;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -7,21 +8,21 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class DashboardFragment extends Fragment {
 
     //widgets
     private ProgressBar totalCardCollect, totalCardUpgrade;
-    private TextView totalCardCollectTV, totalCardUpgradeTV;
+    private TextView totalCardCollectTV, totalCardUpgradeTV, totalSpellExe, spellExeCorAns, spellTotalQues;
 
     //vars
-    private static String uuid;
     private static final String PREF_UNIQUE_ID = "PREF_UNIQUE_ID";
     private int noCollectedCard, noTotalCard, noUpgradeCard, i=0;
 
@@ -36,7 +37,8 @@ public class DashboardFragment extends Fragment {
         //retrieve userID
         SharedPreferences sharedPrefs = getActivity().getSharedPreferences(
                 PREF_UNIQUE_ID, Context.MODE_PRIVATE);
-        uuid = sharedPrefs.getString(PREF_UNIQUE_ID, null);
+
+        String uuid = sharedPrefs.getString(PREF_UNIQUE_ID, null);
 
         //set dashboard username
         TextView homeText = (TextView) rootView.findViewById(R.id.dashboardText);
@@ -53,6 +55,13 @@ public class DashboardFragment extends Fragment {
 
         flashcardProgresses();
 
+        //set spelling exercises stats
+        totalSpellExe = rootView.findViewById(R.id.spelling_exercise_completed_no);
+        spellExeCorAns = rootView.findViewById(R.id.spelling_correct_no);
+        spellTotalQues = rootView.findViewById(R.id.spelling_total_no);
+
+        spellingExeStat(db);
+
 
 
         return rootView;
@@ -61,12 +70,13 @@ public class DashboardFragment extends Fragment {
     public void flashcardProgresses(){
         final Handler collectedHandler = new Handler();
         collectedHandler.postDelayed(new Runnable() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void run() {
                 // set the limitations for the numeric
                 // text under the progress bar
                 if (i <= noCollectedCard) {
-                    totalCardCollectTV.setText(i+"/"+noTotalCard);;
+                    totalCardCollectTV.setText(i+"/"+noTotalCard);
                     totalCardCollect.setProgress(i);
                     totalCardCollect.setMax(noTotalCard);
                     i++;
@@ -79,12 +89,13 @@ public class DashboardFragment extends Fragment {
 
         final Handler upgradedHandler = new Handler();
         upgradedHandler.postDelayed(new Runnable() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void run() {
                 // set the limitations for the numeric
                 // text under the progress bar
                 if (i <= noUpgradeCard) {
-                    totalCardUpgradeTV.setText(i+"/"+noTotalCard);;
+                    totalCardUpgradeTV.setText(i+"/"+noTotalCard);
                     totalCardUpgrade.setProgress(i);
                     totalCardUpgrade.setMax(noTotalCard);
                     i++;
@@ -94,6 +105,16 @@ public class DashboardFragment extends Fragment {
                 }
             }
         }, 100);
+    }
+
+    public void spellingExeStat(DBHelper db){
+        ArrayList<Integer> totalExe;
+        totalExe = db.getExerciseStat("Spelling");
+
+        totalSpellExe.setText(String.valueOf(totalExe.get(0)));
+        spellExeCorAns.setText(String.valueOf(totalExe.get(1)));
+        spellTotalQues.setText(String.valueOf(totalExe.get(2)));
+
     }
 
 }
