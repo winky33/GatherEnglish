@@ -2,7 +2,11 @@ package com.example.gatherenglsih;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -12,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -23,6 +28,7 @@ public class SpellingExercise extends AppCompatActivity {
     ImageView exitBtn, questionDiagram;
     TextView questionTxt;
     Animation smallbigforth;
+    Dialog dialog;
 
     //vars
     private int presCounter = 0, maxPresCounter = 0, currentPos = 1, currentScore = 0;
@@ -39,6 +45,7 @@ public class SpellingExercise extends AppCompatActivity {
         exitBtn = findViewById(R.id.spelling_ExitBtn);
         questionDiagram = findViewById(R.id.spelling_ques_diagram);
         questionTxt = findViewById(R.id.spellingQuestionNo);
+        dialog = new Dialog(this);
 
         questions = db.getSpellingReadingQuestion();
 
@@ -129,7 +136,8 @@ public class SpellingExercise extends AppCompatActivity {
         LinearLayout linearLayout = findViewById(R.id.spellingSelectionLayoutParent);
 
         if(editText.getText().toString().equals(textAnswer)) {
-//            Toast.makeText(MainActivity.this, "Correct", Toast.LENGTH_SHORT).show();
+            openCorrectDialog();
+
             currentScore ++;
             currentPos ++;
             if (currentPos <= questions.size()){
@@ -144,6 +152,8 @@ public class SpellingExercise extends AppCompatActivity {
             }
 
         } else {
+            openWrongDialog();
+
             currentPos ++;
             if (currentPos <= questions.size()){
                 generateQuestion(currentPos - 1);
@@ -163,6 +173,34 @@ public class SpellingExercise extends AppCompatActivity {
         for (char key : keys) {
             addView(linearLayout, String.valueOf(key), editText);
         }
+    }
+
+    public void openCorrectDialog(){
+        dialog.setContentView(R.layout.exercise_correct_wrong_popup);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        ImageView imageView = dialog.findViewById(R.id.exercise_popup_imageView);
+        TextView textView = dialog.findViewById(R.id.exercise_popup_textView);
+
+        imageView.setImageResource(R.drawable.correct_button);
+        textView.setText("Correct");
+        textView.setTextColor(Color.parseColor("#00cb7a"));
+
+        dialog.show();
+    }
+
+    public void openWrongDialog(){
+        dialog.setContentView(R.layout.exercise_correct_wrong_popup);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        ImageView imageView = dialog.findViewById(R.id.exercise_popup_imageView);
+        TextView textView = dialog.findViewById(R.id.exercise_popup_textView);
+
+        imageView.setImageResource(R.drawable.wrong_button);
+        textView.setText("Wrong");
+        textView.setTextColor(Color.parseColor("#f33348"));
+
+        dialog.show();
     }
 }
 

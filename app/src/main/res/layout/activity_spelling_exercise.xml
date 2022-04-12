@@ -45,7 +45,7 @@
         android:textSize="22sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/spelling_exe_desc" />
+        android:text="@string/spelling_desc" />
 
     <LinearLayout
         android:layout_gravity="center"
@@ -95,7 +95,8 @@
             android:inputType="text"
             android:padding="10dp"
             android:textColor="#332FA2"
-            android:textSize="32sp"/>
+            android:textSize="32sp"
+            tools:ignore="LabelFor" />
     </LinearLayout>
 
     <TextView
