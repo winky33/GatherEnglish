@@ -455,7 +455,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public int getUpgradedCardQty() {
         SQLiteDatabase DB = this.getReadableDatabase();
 
-        String checkSql = "SELECT " + KEY_CARD_DIAGRAM + " FROM " + TABLE_FLASHCARD + " INNER JOIN "
+        String checkSql = "SELECT * FROM " + TABLE_FLASHCARD + " INNER JOIN "
                 + TABLE_USERCARD + " ON " + TABLE_FLASHCARD + "." + KEY_CARD_ID + " = " + TABLE_USERCARD + "." + KEY_CARD_ID
                 + " WHERE " + KEY_CARD_TYPE + " = ?";
         Cursor check = DB.rawQuery(checkSql, new String[]{"LV2"});
@@ -469,7 +469,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return 0;
     }
-
 
     public void getListeningQuestions(ArrayList<ListeningQuizModel> quizModelArrayList) {
         SQLiteDatabase DB = this.getReadableDatabase();

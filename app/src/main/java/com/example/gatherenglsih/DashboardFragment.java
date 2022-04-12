@@ -20,11 +20,14 @@ public class DashboardFragment extends Fragment {
 
     //widgets
     private ProgressBar totalCardCollect, totalCardUpgrade;
-    private TextView totalCardCollectTV, totalCardUpgradeTV, totalSpellExe, spellExeCorAns, spellTotalQues;
+    private TextView totalCardCollectTV, totalCardUpgradeTV,
+            totalSpellExe, spellExeCorAns, spellTotalQues,
+            totalLisExe, lisExeCorAns, lisTotalQues,
+            totalReadExe, readExeCorAns, readTotalQues;
 
     //vars
     private static final String PREF_UNIQUE_ID = "PREF_UNIQUE_ID";
-    private int noCollectedCard, noTotalCard, noUpgradeCard, i=0;
+    private int noCollectedCard, noTotalCard, noUpgradeCard, i=0, c=0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,9 +63,17 @@ public class DashboardFragment extends Fragment {
         spellExeCorAns = rootView.findViewById(R.id.spelling_correct_no);
         spellTotalQues = rootView.findViewById(R.id.spelling_total_no);
 
-        spellingExeStat(db);
+        //set listening exercises stats
+        totalLisExe = rootView.findViewById(R.id.listening_exercise_completed_no);
+        lisExeCorAns = rootView.findViewById(R.id.listening_correct_no);
+        lisTotalQues = rootView.findViewById(R.id.listening_total_no);
 
+        //set reading exercises stats
+        totalReadExe = rootView.findViewById(R.id.reading_exercise_completed_no);
+        readExeCorAns = rootView.findViewById(R.id.reading_correct_no);
+        readTotalQues = rootView.findViewById(R.id.reading_total_no);
 
+        getExeStat(db);
 
         return rootView;
     }
@@ -94,11 +105,11 @@ public class DashboardFragment extends Fragment {
             public void run() {
                 // set the limitations for the numeric
                 // text under the progress bar
-                if (i <= noUpgradeCard) {
-                    totalCardUpgradeTV.setText(i+"/"+noTotalCard);
-                    totalCardUpgrade.setProgress(i);
+                if (c <= noUpgradeCard) {
+                    totalCardUpgradeTV.setText(c+"/"+noTotalCard);
+                    totalCardUpgrade.setProgress(c);
                     totalCardUpgrade.setMax(noTotalCard);
-                    i++;
+                    c++;
                     upgradedHandler.postDelayed(this, 100);
                 } else {
                     upgradedHandler.removeCallbacks(this);
@@ -107,14 +118,30 @@ public class DashboardFragment extends Fragment {
         }, 100);
     }
 
-    public void spellingExeStat(DBHelper db){
-        ArrayList<Integer> totalExe;
-        totalExe = db.getExerciseStat("Spelling");
+    public void getExeStat(DBHelper db){
+        //Spelling
+        ArrayList<Integer> totalSpellingExe;
+        totalSpellingExe = db.getExerciseStat("Spelling");
 
-        totalSpellExe.setText(String.valueOf(totalExe.get(0)));
-        spellExeCorAns.setText(String.valueOf(totalExe.get(1)));
-        spellTotalQues.setText(String.valueOf(totalExe.get(2)));
+        totalSpellExe.setText(String.valueOf(totalSpellingExe.get(0)));
+        spellExeCorAns.setText(String.valueOf(totalSpellingExe.get(1)));
+        spellTotalQues.setText(String.valueOf(totalSpellingExe.get(2)));
 
+        //Listening
+        ArrayList<Integer> totalListeningExe;
+        totalListeningExe = db.getExerciseStat("Listening");
+
+        totalLisExe.setText(String.valueOf(totalListeningExe.get(0)));
+        lisExeCorAns.setText(String.valueOf(totalListeningExe.get(1)));
+        lisTotalQues.setText(String.valueOf(totalListeningExe.get(2)));
+
+        //Reading
+        ArrayList<Integer> totalReadingExe;
+        totalReadingExe = db.getExerciseStat("Reading");
+
+        totalReadExe.setText(String.valueOf(totalReadingExe.get(0)));
+        readExeCorAns.setText(String.valueOf(totalReadingExe.get(1)));
+        readTotalQues.setText(String.valueOf(totalReadingExe.get(2)));
     }
 
 }
