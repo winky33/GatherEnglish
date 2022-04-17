@@ -3,16 +3,25 @@ package com.example.gatherenglsih;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.github.mikephil.charting.charts.RadarChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.RadarData;
+import com.github.mikephil.charting.data.RadarDataSet;
+import com.github.mikephil.charting.data.RadarEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
 import java.util.ArrayList;
 
@@ -24,10 +33,12 @@ public class DashboardFragment extends Fragment {
             totalSpellExe, spellExeCorAns, spellTotalQues,
             totalLisExe, lisExeCorAns, lisTotalQues,
             totalReadExe, readExeCorAns, readTotalQues;
+    private RadarChart radarChart;
 
     //vars
     private static final String PREF_UNIQUE_ID = "PREF_UNIQUE_ID";
     private int noCollectedCard, noTotalCard, noUpgradeCard, i=0, c=0;
+    private float spellingValue, readingValue, listeningValue;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,6 +85,10 @@ public class DashboardFragment extends Fragment {
         readTotalQues = rootView.findViewById(R.id.reading_total_no);
 
         getExeStat(db);
+
+        //set radar chart
+        radarChart = rootView.findViewById(R.id.radarChart);
+        displayRadarChart();
 
         return rootView;
     }
@@ -126,6 +141,7 @@ public class DashboardFragment extends Fragment {
         totalSpellExe.setText(String.valueOf(totalSpellingExe.get(0)));
         spellExeCorAns.setText(String.valueOf(totalSpellingExe.get(1)));
         spellTotalQues.setText(String.valueOf(totalSpellingExe.get(2)));
+        spellingValue = ((float)totalSpellingExe.get(1)/(float)totalSpellingExe.get(2))*100;
 
         //Listening
         ArrayList<Integer> totalListeningExe;
@@ -134,6 +150,7 @@ public class DashboardFragment extends Fragment {
         totalLisExe.setText(String.valueOf(totalListeningExe.get(0)));
         lisExeCorAns.setText(String.valueOf(totalListeningExe.get(1)));
         lisTotalQues.setText(String.valueOf(totalListeningExe.get(2)));
+        listeningValue = ((float)totalListeningExe.get(1)/(float)totalListeningExe.get(2))*100;
 
         //Reading
         ArrayList<Integer> totalReadingExe;
@@ -142,6 +159,33 @@ public class DashboardFragment extends Fragment {
         totalReadExe.setText(String.valueOf(totalReadingExe.get(0)));
         readExeCorAns.setText(String.valueOf(totalReadingExe.get(1)));
         readTotalQues.setText(String.valueOf(totalReadingExe.get(2)));
+        readingValue = ((float)totalReadingExe.get(1)/(float)totalReadingExe.get(2))*100;
+        Log.d("float value", "getExeStat: "+readingValue);
     }
 
+    public void displayRadarChart(){
+        ArrayList<RadarEntry> exerciseStat = new ArrayList<>();
+        exerciseStat.add(new RadarEntry(spellingValue));
+        exerciseStat.add(new RadarEntry(readingValue));
+        exerciseStat.add(new RadarEntry(listeningValue));
+
+        RadarDataSet radarDataSetForExerciseStat = new RadarDataSet(exerciseStat, "Exercises");
+        radarDataSetForExerciseStat.setColor(Color.RED);
+        radarDataSetForExerciseStat.setFillColor(Color.RED);
+        radarDataSetForExerciseStat.setFillAlpha(160);
+        radarDataSetForExerciseStat.setDrawFilled(true);
+        radarDataSetForExerciseStat.setLineWidth(2f);
+        radarDataSetForExerciseStat.setDrawHighlightCircleEnabled(true);
+        radarDataSetForExerciseStat.setDrawHighlightCircleEnabled(false);
+
+        RadarData radarData = new RadarData();
+        radarData.addDataSet(radarDataSetForExerciseStat);
+
+        String[] labels = {"Spelling", "Reading", "Listening"};
+
+        XAxis xAxis = radarChart.getXAxis();
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
+
+        radarChart.setData(radarData);
+    }
 }
