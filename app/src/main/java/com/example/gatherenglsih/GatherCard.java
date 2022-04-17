@@ -9,7 +9,6 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.media.MediaPlayer;
 import android.media.ThumbnailUtils;
 
 import android.os.Bundle;
@@ -71,13 +70,10 @@ public class GatherCard extends AppCompatActivity {
             }
         });
 
-        textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int i) {
-                if(i!=TextToSpeech.ERROR){//if no error found
-                    // To Choose language of speech
-                    textToSpeech.setLanguage(Locale.US);
-                }
+        textToSpeech = new TextToSpeech(getApplicationContext(), i -> {
+            if(i!=TextToSpeech.ERROR){//if no error found
+                // To Choose language of speech
+                textToSpeech.setLanguage(Locale.US);
             }
         });
     }
