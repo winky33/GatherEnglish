@@ -44,6 +44,10 @@
             android:layout_gravity="end"
             android:layout_marginEnd="30dp"
             android:gravity="center"
+            android:background="@drawable/circle_button_style"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="3dp"
             tools:ignore="RelativeOverlap,UseCompoundDrawables">
 
             <ImageView
@@ -53,12 +57,6 @@
                 android:layout_marginTop="2dp"
                 android:layout_marginEnd="5dp"
                 android:contentDescription="@string/coin_image"
-                app:layout_constraintBottom_toBottomOf="@+id/coinText"
-                app:layout_constraintEnd_toStartOf="@+id/coinText"
-                app:layout_constraintHorizontal_bias="0.232"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/coinText"
-                app:layout_constraintVertical_bias="0.4"
                 app:srcCompat="@drawable/ic_baseline_coin_on_24"
                 tools:ignore="ImageContrastCheck" />
 
@@ -69,7 +67,7 @@
                 android:layout_marginTop="1dp"
                 android:text="@string/coin"
                 android:textSize="20sp"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textStyle="bold" />
         </LinearLayout>
     </RelativeLayout>

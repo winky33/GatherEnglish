@@ -175,7 +175,7 @@ public class SpellingExercise extends AppCompatActivity {
         }
     }
 
-    public void openCorrectDialog(){
+    private void openCorrectDialog(){
         dialog.setContentView(R.layout.exercise_correct_wrong_popup);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -189,7 +189,7 @@ public class SpellingExercise extends AppCompatActivity {
         dialog.show();
     }
 
-    public void openWrongDialog(){
+    private void openWrongDialog(){
         dialog.setContentView(R.layout.exercise_correct_wrong_popup);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 

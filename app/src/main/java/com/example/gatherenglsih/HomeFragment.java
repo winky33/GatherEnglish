@@ -33,7 +33,7 @@ public class HomeFragment extends Fragment {
         TextView homeText = rootView.findViewById(R.id.homeText);
         homeText.setText("Welcome, "+db.getUserName(uuid));
 
-        Button gather_card_btn = rootView.findViewById(R.id.gathercard_btn);
+        View gather_card_btn = rootView.findViewById(R.id.gathercard_btn);
         Button gallery_btn = rootView.findViewById(R.id.gallery_btn);
         Button exercise_btn = rootView.findViewById(R.id.exercise_btn);
 

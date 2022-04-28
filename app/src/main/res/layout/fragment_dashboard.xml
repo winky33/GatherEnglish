@@ -59,23 +59,32 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp">
 
                     <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="15dp"
                         app:cardCornerRadius="20dp"
                         android:layout_marginStart="15dp"
                         android:id="@+id/total_collect_layout"
                         tools:ignore="RelativeOverlap">
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="15dp"
+                                android:layout_weight="1">
 
                             <ProgressBar
                                 android:id="@+id/total_collect_progress"
@@ -114,21 +123,11 @@
                             </LinearLayout>
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
-                    </androidx.cardview.widget.CardView>
-
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="20dp"
-                        android:layout_marginEnd="15dp"
-                        android:id="@+id/total_upgrade_layout"
-                        android:layout_alignParentEnd="true"
-                        tools:ignore="RelativeOverlap">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
 
                             <ProgressBar
                                 android:id="@+id/total_upgrade_progress"
@@ -166,10 +165,13 @@
                                     android:textSize="20sp"/>
                             </LinearLayout>
                         </androidx.constraintlayout.widget.ConstraintLayout>
+                        </LinearLayout>
 
                     </androidx.cardview.widget.CardView>
 
-                </RelativeLayout>
+
+
+                </LinearLayout>
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
@@ -209,17 +211,17 @@
                             android:textColor="@color/teal_200"
                             style="bold"/>
 
-                        <RelativeLayout
-                            android:layout_width="match_parent"
+                        <LinearLayout
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:layout_margin="10dp">
 
                             <LinearLayout
                                 android:layout_width="150dp"
                                 android:layout_height="150dp"
-                                android:layout_centerInParent="true"
+                                android:layout_gravity="center"
                                 android:layout_marginEnd="60dp"
-                                android:layout_toStartOf="@+id/right_side"
                                 android:background="@drawable/circle_button_style"
                                 android:backgroundTint="@color/teal_200"
                                 android:orientation="vertical"
@@ -247,7 +249,7 @@
                             <LinearLayout
                                 android:id="@+id/right_side"
                                 android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
+                                android:layout_height="wrap_content"
                                 android:orientation="vertical"
                                 android:layout_alignParentEnd="true"
                                 android:layout_marginEnd="20dp">
@@ -312,7 +314,7 @@
                                         android:textColor="@color/teal_200"/>
                                 </LinearLayout>
                             </LinearLayout>
-                        </RelativeLayout>
+                        </LinearLayout>
 
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -340,21 +342,21 @@
                             android:textColor="@color/purple_500"
                             style="bold"/>
 
-                        <RelativeLayout
-                            android:layout_width="match_parent"
+                        <LinearLayout
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:layout_margin="10dp">
 
                             <LinearLayout
                                 android:layout_width="150dp"
                                 android:layout_height="150dp"
+                                android:layout_gravity="center"
                                 android:background="@drawable/circle_button_style"
                                 android:backgroundTint="@color/purple_500"
                                 android:orientation="vertical"
                                 android:paddingTop="5dp"
-                                android:layout_marginEnd="60dp"
-                                android:layout_toStartOf="@+id/listening_right_side"
-                                android:layout_centerInParent="true">
+                                android:layout_marginEnd="60dp">
 
                                 <TextView
                                     android:id="@+id/listening_exercise_completed_no"
@@ -378,9 +380,8 @@
                             <LinearLayout
                                 android:id="@+id/listening_right_side"
                                 android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
+                                android:layout_height="wrap_content"
                                 android:orientation="vertical"
-                                android:layout_alignParentEnd="true"
                                 android:layout_marginEnd="20dp">
 
                                 <LinearLayout
@@ -441,7 +442,7 @@
                                         android:textColor="@color/purple_500"/>
                                 </LinearLayout>
                             </LinearLayout>
-                        </RelativeLayout>
+                        </LinearLayout>
 
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -469,17 +470,17 @@
                             android:textColor="#FF1744"
                             style="bold"/>
 
-                        <RelativeLayout
-                            android:layout_width="match_parent"
+                        <LinearLayout
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:layout_margin="10dp">
 
                             <LinearLayout
                                 android:layout_width="150dp"
                                 android:layout_height="150dp"
-                                android:layout_centerInParent="true"
+                                android:layout_gravity="center"
                                 android:layout_marginEnd="60dp"
-                                android:layout_toStartOf="@+id/reading_right_side"
                                 android:background="@drawable/circle_button_style"
                                 android:backgroundTint="#FF1744"
                                 android:orientation="vertical"
@@ -507,9 +508,8 @@
                             <LinearLayout
                                 android:id="@+id/reading_right_side"
                                 android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
+                                android:layout_height="wrap_content"
                                 android:orientation="vertical"
-                                android:layout_alignParentEnd="true"
                                 android:layout_marginEnd="20dp">
 
                                 <LinearLayout
@@ -570,7 +570,7 @@
                                         android:textColor="#FF1744"/>
                                 </LinearLayout>
                             </LinearLayout>
-                        </RelativeLayout>
+                        </LinearLayout>
 
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>

@@ -54,7 +54,6 @@ public class GatherCard extends AppCompatActivity {
         cardDiagramView = findViewById(R.id.popup_obtained_card);
         imageView = findViewById(R.id.camera_preview);
         picture = findViewById(R.id.capture_btn);
-        result = findViewById(R.id.result);
         backBtn = findViewById(R.id.gathercard_exitBtn);
 
         backBtn.setOnClickListener(view -> startActivity(new Intent(GatherCard.this, Homepage.class)));
@@ -144,7 +143,7 @@ public class GatherCard extends AppCompatActivity {
             if(maxPos!=999){
                 String[] classes = {"Sofa", "Lamp", "Table", "Chair", "Bed", "Clock", "Door", "Television"};
                 object = classes[maxPos];
-                result.setText(object);
+
                 return object;
             }
 

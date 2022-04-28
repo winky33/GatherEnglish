@@ -6,9 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -35,6 +38,7 @@ public class ReadingExercise extends AppCompatActivity {
     TextView quesNoTxt, quesWord;
     ImageView exitBtn, quesDiagram, micBtn;
     Button submitBtn;
+    //Dialog dialog;
 
     //vars
     protected static final int RESULT_SPEECH = 1;
@@ -54,54 +58,39 @@ public class ReadingExercise extends AppCompatActivity {
         micBtn = findViewById(R.id.reading_mic_button);
         submitBtn = findViewById(R.id.reading_submit_button);
 
-        exitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ReadingExercise.this, Homepage.class));
-            }
-        });
+        exitBtn.setOnClickListener(view -> startActivity(new Intent(ReadingExercise.this, Homepage.class)));
 
         questions = db.getSpellingReadingQuestion();
         generateQuestion(currentPos-1);
 
-        micBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                checkAudioPermission();
-                micBtn.setColorFilter(ContextCompat.getColor(ReadingExercise.this, R.color.mic_enabled_color));
-                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-US");
+        micBtn.setOnClickListener(view -> {
+            checkAudioPermission();
+            micBtn.setColorFilter(ContextCompat.getColor(ReadingExercise.this, R.color.mic_enabled_color));
+            Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-US");
 
 
-                try {
-                    startActivityForResult(intent, RESULT_SPEECH);
-                    inputAnswer = "";
-                } catch (ActivityNotFoundException e) {
-                    Toast.makeText(getApplicationContext(), "Your device doesn't support Speech to Text", Toast.LENGTH_SHORT).show();
-                    e.printStackTrace();
-                }
+            try {
+                startActivityForResult(intent, RESULT_SPEECH);
+                inputAnswer = "";
+            } catch (ActivityNotFoundException e) {
+                Toast.makeText(getApplicationContext(), "Your device doesn't support Speech to Text", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
             }
         });
 
-        submitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                doValidate();
-            }
-        });
+        submitBtn.setOnClickListener(view -> doValidate());
 
     }
 
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode){
-            case RESULT_SPEECH:
-                if(resultCode == RESULT_OK && data != null){
-                    ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    inputAnswer = text.get(0);
-                }
-                break;
+        if (requestCode == RESULT_SPEECH) {
+            if (resultCode == RESULT_OK && data != null) {
+                ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                inputAnswer = text.get(0);
+            }
         }
     }
 
@@ -119,7 +108,8 @@ public class ReadingExercise extends AppCompatActivity {
     private void doValidate() {
 
         if(quesWord.getText().toString().equals(inputAnswer.toUpperCase())) {
-//            Toast.makeText(MainActivity.this, "Correct", Toast.LENGTH_SHORT).show();
+            //openCorrectDialog();
+
             currentScore ++;
             currentPos ++;
             if (currentPos <= questions.size()){
@@ -134,6 +124,8 @@ public class ReadingExercise extends AppCompatActivity {
             }
 
         } else {
+            //openWrongDialog();
+
             currentPos ++;
             if (currentPos <= questions.size()){
                 generateQuestion(currentPos - 1);
@@ -158,4 +150,37 @@ public class ReadingExercise extends AppCompatActivity {
             }
         }
     }
+
+    //TODO: ADD FEEDBACK TO ANSWER
+/*
+    @SuppressLint("SetTextI18n")
+    public void openCorrectDialog(){
+        dialog.setContentView(R.layout.exercise_correct_wrong_popup);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        ImageView imageView = dialog.findViewById(R.id.exercise_popup_imageView);
+        TextView textView = dialog.findViewById(R.id.exercise_popup_textView);
+
+        imageView.setImageResource(R.drawable.correct_button);
+        textView.setText("Correct");
+        textView.setTextColor(Color.parseColor("#00cb7a"));
+
+        dialog.show();
+    }
+
+    public void openWrongDialog(){
+        dialog.setContentView(R.layout.exercise_correct_wrong_popup);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        ImageView imageView = dialog.findViewById(R.id.exercise_popup_imageView);
+        TextView textView = dialog.findViewById(R.id.exercise_popup_textView);
+
+        imageView.setImageResource(R.drawable.wrong_button);
+        textView.setText("Wrong");
+        textView.setTextColor(Color.parseColor("#f33348"));
+
+        dialog.show();
+    }
+
+ */
 }
