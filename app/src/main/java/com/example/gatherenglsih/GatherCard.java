@@ -39,7 +39,7 @@ public class GatherCard extends AppCompatActivity {
     TextToSpeech textToSpeech;
 
     //widgets
-    TextView result, closeBtn;
+    TextView cardTitle, closeBtn;
     ImageView imageView,cardDiagramView, backBtn;
     ImageButton picture;
 
@@ -170,6 +170,7 @@ public class GatherCard extends AppCompatActivity {
                 final View cardPopupView = getLayoutInflater().inflate(R.layout.gather_card_popup, null);
 
                 cardDiagramView = cardPopupView.findViewById(R.id.popup_obtained_card);
+                cardTitle = cardPopupView.findViewById(R.id.card_title);
                 closeBtn = cardPopupView.findViewById(R.id.popup_close_btn);
 
                 dialogBuilder.setView(cardPopupView);
@@ -179,6 +180,7 @@ public class GatherCard extends AppCompatActivity {
                 textToSpeech.speak(imgClass,TextToSpeech.QUEUE_FLUSH,null);
 
                 cardDiagramView.setImageResource(diagram);
+                cardTitle.setText(imgClass);
 
                 dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                 dialog.getWindow().setGravity(Gravity.CENTER_HORIZONTAL);

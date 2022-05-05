@@ -16,6 +16,7 @@
             android:scaleType="fitXY"
             android:src="@drawable/chair1"
             android:contentDescription="@string/card_diagram_description" />
+
         <TextView
             android:id="@+id/popup_close_btn"
             android:layout_width="30dp"
@@ -24,5 +25,17 @@
             android:gravity="center"
             android:text="@string/x_button"
             android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/card_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="23sp"
+            android:layout_marginBottom="30dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textAlignment="center"
+            android:layout_gravity="center|bottom"
+            android:text="@string/card_title_description" />
 
 </androidx.cardview.widget.CardView>
