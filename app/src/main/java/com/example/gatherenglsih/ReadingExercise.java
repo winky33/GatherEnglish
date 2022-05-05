@@ -153,7 +153,6 @@ public class ReadingExercise extends AppCompatActivity {
 
     //TODO: ADD FEEDBACK TO ANSWER
 /*
-    @SuppressLint("SetTextI18n")
     public void openCorrectDialog(){
         dialog.setContentView(R.layout.exercise_correct_wrong_popup);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

@@ -141,7 +141,7 @@ public class GatherCard extends AppCompatActivity {
             }
 
             if(maxPos!=999){
-                String[] classes = {"Sofa", "Lamp", "Table", "Chair", "Bed", "Clock", "Door", "Television"};
+                String[] classes = {"Sofa", "Lamp", "Table", "Chair", "Bed", "Clock", "Door", "Fan", "Stove", "Mirror"};
                 object = classes[maxPos];
 
                 return object;

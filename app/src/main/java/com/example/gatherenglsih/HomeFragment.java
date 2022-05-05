@@ -34,8 +34,8 @@ public class HomeFragment extends Fragment {
         homeText.setText("Welcome, "+db.getUserName(uuid));
 
         View gather_card_btn = rootView.findViewById(R.id.gathercard_btn);
-        Button gallery_btn = rootView.findViewById(R.id.gallery_btn);
-        Button exercise_btn = rootView.findViewById(R.id.exercise_btn);
+        View gallery_btn = rootView.findViewById(R.id.gallery_btn);
+        View exercise_btn = rootView.findViewById(R.id.exercise_btn);
 
         gather_card_btn.setOnClickListener(view -> {
             Intent intent = new Intent(getActivity(), GatherCard.class);
