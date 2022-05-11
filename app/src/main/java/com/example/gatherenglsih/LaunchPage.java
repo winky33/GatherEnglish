@@ -72,22 +72,6 @@ public class LaunchPage extends AppCompatActivity {
 
             dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
             dialog.getWindow().setGravity(Gravity.CENTER_HORIZONTAL);
-            DisplayMetrics dm = new DisplayMetrics();
-            dialog.getWindow().getWindowManager().getDefaultDisplay().getMetrics(dm);
-
-            int width = dm.widthPixels;
-            int height = dm.heightPixels;
-
-            dialog.getWindow().setLayout((int)(width*.64), (int)(height*.32));
-
-            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-            lp.copyFrom(dialog.getWindow().getAttributes());
-            lp.gravity = Gravity.CENTER;
-            lp.x = 0;
-            lp.y = -20;
-
-            dialog.getWindow().setAttributes(lp);
-
 
             btn_continue.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -102,7 +86,6 @@ public class LaunchPage extends AppCompatActivity {
                     }
                 }
             });
-            //startActivity(new Intent(LaunchPage.this, PopupWindow.class).putExtra("uuid", uuid));
 
         }else{
             startActivity(new Intent(LaunchPage.this, Homepage.class));

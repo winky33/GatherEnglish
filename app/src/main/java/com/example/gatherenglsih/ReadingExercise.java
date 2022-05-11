@@ -3,8 +3,10 @@ package com.example.gatherenglsih;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresPermission;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
@@ -38,7 +40,7 @@ public class ReadingExercise extends AppCompatActivity {
     TextView quesNoTxt, quesWord;
     ImageView exitBtn, quesDiagram, micBtn;
     Button submitBtn;
-    //Dialog dialog;
+    Dialog dialog;
 
     //vars
     protected static final int RESULT_SPEECH = 1;
@@ -50,6 +52,7 @@ public class ReadingExercise extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reading_exercise);
+        dialog = new Dialog(this);
 
         exitBtn = findViewById(R.id.reading_ExitBtn);
         quesNoTxt = findViewById(R.id.readingQuestionNo);
@@ -108,7 +111,7 @@ public class ReadingExercise extends AppCompatActivity {
     private void doValidate() {
 
         if(quesWord.getText().toString().equals(inputAnswer.toUpperCase())) {
-            //openCorrectDialog();
+            openCorrectDialog();
 
             currentScore ++;
             currentPos ++;
@@ -124,7 +127,7 @@ public class ReadingExercise extends AppCompatActivity {
             }
 
         } else {
-            //openWrongDialog();
+            openWrongDialog();
 
             currentPos ++;
             if (currentPos <= questions.size()){
@@ -143,16 +146,15 @@ public class ReadingExercise extends AppCompatActivity {
 
     private void checkAudioPermission(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {  // M = 23
-            if (ContextCompat.checkSelfPermission(this, "android.permission.RECORD_AUDIO") != PackageManager.PERMISSION_GRANTED) {
-                Intent audioIntent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:com.example.gatherenglsih"));
-                startActivity(audioIntent);
-                Toast.makeText(this, "Allow Microphone Permission", Toast.LENGTH_SHORT).show();
+            if (ContextCompat.checkSelfPermission(this, "Manifest.permission.RECORD_AUDIO") != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.RECORD_AUDIO}, 100);
             }
         }
     }
 
     //TODO: ADD FEEDBACK TO ANSWER
-/*
+
     public void openCorrectDialog(){
         dialog.setContentView(R.layout.exercise_correct_wrong_popup);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -181,5 +183,5 @@ public class ReadingExercise extends AppCompatActivity {
         dialog.show();
     }
 
- */
+
 }
