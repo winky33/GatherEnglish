@@ -95,17 +95,23 @@ public class CardView extends AppCompatActivity {
         currentCardId = cardID;
 
         swapDiagram.setOnClickListener(view -> {
-
-            boolean swap = db.swapCardDiagram(currentCardId);
-            if (swap){
-                if (currentCardId % 2 == 0 ){// if current card is LV2
-                    currentCardId = currentCardId-1;
+            if (currentCardId % 2 != 0){
+                boolean check = db.checkAvailability(currentCardId+1);//check if the upgraded card available
+                if (!check){
+                    Toast errorToast = Toast.makeText(CardView.this, "Please upgrade the card to swap the card diagram", Toast.LENGTH_SHORT);
+                    errorToast.show();
                 }else{
+                    db.swapCardDiagram(currentCardId);
                     currentCardId = currentCardId+1;
+                    cardDiagram.setImageResource(db.getDiagram(currentCardId));
                 }
+            }else {
+                db.swapCardDiagram(currentCardId);
+                currentCardId = currentCardId-1;
                 cardDiagram.setImageResource(db.getDiagram(currentCardId));
             }
-        });
+    });
+
 
     }
 

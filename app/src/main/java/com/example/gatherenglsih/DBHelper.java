@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Random;
 
@@ -89,6 +90,7 @@ public class DBHelper extends SQLiteOpenHelper {
             values.put(KEY_CARD_DIAGRAM, diagramArray[i]);
             DB.insert(TABLE_FLASHCARD, null, values);
         }
+
     }
 
     @Override

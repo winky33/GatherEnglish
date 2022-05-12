@@ -19,6 +19,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.UUID;
@@ -79,10 +80,16 @@ public class LaunchPage extends AppCompatActivity {
                     String nameTXT = name.getText().toString();
                     String currentTime = Calendar.getInstance().getTime().toString();
 
-                    boolean addNew = db.addNewUser(uuid, nameTXT, currentTime);
+                    if(nameTXT.isEmpty()){
+                        Toast.makeText(LaunchPage.this, "You did not enter a username", Toast.LENGTH_SHORT).show();
+                        return;
 
-                    if (addNew == true){
-                        startActivity(new Intent(LaunchPage.this, Homepage.class));
+                    }else{
+                        boolean addNew = db.addNewUser(uuid, nameTXT, currentTime);
+
+                        if (addNew == true){
+                            startActivity(new Intent(LaunchPage.this, Homepage.class));
+                        }
                     }
                 }
             });
