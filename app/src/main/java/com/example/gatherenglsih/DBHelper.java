@@ -110,7 +110,7 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(KEY_USER_ID, userID);
         values.put(KEY_USERNAME, UserName);
         values.put(KEY_REGISTER_DATE, RegisterDate);
-        values.put(KEY_COIN_AMOUNT, 5);
+        values.put(KEY_COIN_AMOUNT, 0);
 
         long result = DB.insert(TABLE_USER, null, values);
 
